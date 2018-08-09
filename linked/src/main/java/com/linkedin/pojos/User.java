@@ -11,7 +11,6 @@ public class User {
   private String phone;
   private String role;
 
-
   public long getIduser() {
     return iduser;
   }
@@ -19,7 +18,6 @@ public class User {
   public void setIduser(long iduser) {
     this.iduser = iduser;
   }
-
 
   public String getName() {
     return name;
@@ -29,7 +27,6 @@ public class User {
     this.name = name;
   }
 
-
   public String getSurname() {
     return surname;
   }
@@ -37,7 +34,6 @@ public class User {
   public void setSurname(String surname) {
     this.surname = surname;
   }
-
 
   public String getEmail() {
     return email;
@@ -47,7 +43,6 @@ public class User {
     this.email = email;
   }
 
-
   public String getPass() {
     return pass;
   }
@@ -56,7 +51,6 @@ public class User {
     this.pass = pass;
   }
 
-
   public String getPhone() {
     return phone;
   }
@@ -64,7 +58,6 @@ public class User {
   public void setPhone(String phone) {
     this.phone = phone;
   }
-
 
   public String getRole() {
     return role;
