@@ -1,0 +1,20 @@
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <a routerLink="/">
+      <img src="../../assets/mainlogo.png">
+    </a>
+    <div class="col-md-3"></div>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Home</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">My Network</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Jobs</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Messaging</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Notifications</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">My Profile</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Settings</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()" (click)="_authService.logoutUser()" routerLink="/register">Logout</a>
+  </div>
+</nav>
+<br><br><br>
+
+
