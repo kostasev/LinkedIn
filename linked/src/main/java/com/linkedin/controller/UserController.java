@@ -6,6 +6,8 @@ import com.linkedin.pojos.UserCredentials;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -59,7 +61,8 @@ public class UserController {
             }
             String token = createToken(authUser);
             System.out.println("User Logged in succesfully\n");
-            return Response.ok(token).build();
+            JsonObject tokenJson = Json.createObjectBuilder().add("token",token).build();
+            return Response.ok(tokenJson).build();
         }catch (Exception e){
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -129,8 +132,9 @@ public class UserController {
                 user.getRepass()+
                 user.getEmail()+
                 user.getBirthday());
-
+        String pass = null;
         if (user.getPass().equals(user.getRepass())){
+            pass = user.getPass();
             System.out.println("Password ok");
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPass(encoder.encode(user.getPass()));
@@ -179,7 +183,15 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        return Response.ok().build();
+        System.out.println("credentials "+ user.getEmail() + " " + user.getPass());
+        UserInfo authUser = authenticateUser(user.getEmail(), pass);
+        if (authUser == null) {
+            System.out.println("There is not a user with given credentials");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        String token = createToken(authUser);
+        JsonObject tokenJson = Json.createObjectBuilder().add("token",token).build();
+        return Response.ok(tokenJson).build();
     }
 }
 
