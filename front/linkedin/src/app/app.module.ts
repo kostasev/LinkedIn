@@ -12,6 +12,10 @@ import { FormsModule } from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
+import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ChangeInfoComponent } from './change-info/change-info.component';
+import { ChangePassComponent } from './change-pass/change-pass.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import {AuthGuard} from './auth.guard';
     SignupComponent,
     HomeComponent,
     NavbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    SettingsComponent,
+    ProfileComponent,
+    ChangeInfoComponent,
+    ChangePassComponent
   ],
   imports: [
     BrowserModule,

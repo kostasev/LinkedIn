@@ -1,70 +1,55 @@
 package com.linkedin.pojos;
 
-
 public class User {
+    private String token;
+    private String name;
+    private String surname;
+    private String email;
+    private String phone;
+    private String birthday;
 
-  private long iduser;
-  private String name;
-  private String surname;
-  private String email;
-  private String pass;
-  private String phone;
-  private String role;
+    public String getToken() {
+        return token;
+    }
 
-  public long getIduser() {
-    return iduser;
-  }
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-  public void setIduser(long iduser) {
-    this.iduser = iduser;
-  }
 
-  public String getName() {
-    return name;
-  }
+    public String getBirthday() { return birthday; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setBirthday(String birthday) { this.birthday = birthday; }
 
-  public String getSurname() {
-    return surname;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setSurname(String surname) {
-    this.surname = surname;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getSurname() {
+        return surname;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-  public String getPass() {
-    return pass;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public void setPass(String pass) {
-    this.pass = pass;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public String getPhone() {
-    return phone;
-  }
+    public String getPhone() {
+        return phone;
+    }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

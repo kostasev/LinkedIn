@@ -10,7 +10,16 @@ public class Authenticator {
 
     private String token;;
     private String type;
+    private String email;
     private int userid;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getUserid() {
         return userid;
@@ -54,7 +63,8 @@ public class Authenticator {
             if (now.after(claims.getExpiration()))
                 throw new Exception();
             this.type = (String) claims.get("role");
-            this.userid = (Integer) claims.get("id");
+            this.userid = Integer.parseInt((String)claims.get("id"));
+            this.email = (String) claims.get("email");
         } catch (Exception e) {
             throw e;
         }

@@ -10,8 +10,8 @@
     <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Jobs</a>
     <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Messaging</a>
     <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Notifications</a>
-    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">My Profile</a>
-    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/">Settings</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/profile">My Profile</a>
+    <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()"  routerLink="/settings">Settings</a>
     <a class="py-2 d-none d-md-inline-block" *ngIf="!!_authService.loggedIn()" (click)="_authService.logoutUser()" routerLink="/register">Logout</a>
   </div>
 </nav>

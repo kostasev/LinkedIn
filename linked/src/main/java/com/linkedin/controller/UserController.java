@@ -1,9 +1,10 @@
 package com.linkedin.controller;
 
+import com.google.gson.Gson;
 import com.linkedin.db.DBConnector;
-import com.linkedin.pojos.SignUser;
-import com.linkedin.pojos.UserCredentials;
+import com.linkedin.pojos.*;
 
+import com.linkedin.security.Authenticator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.json.Json;
@@ -45,6 +46,7 @@ public class UserController {
     private class UserInfo {
         int id;
         String accountType;
+        String email;
     }
 
     @Path("login")
@@ -61,7 +63,10 @@ public class UserController {
             }
             String token = createToken(authUser);
             System.out.println("User Logged in succesfully\n");
-            JsonObject tokenJson = Json.createObjectBuilder().add("token",token).build();
+            JsonObject tokenJson = Json.createObjectBuilder()
+                    .add("token",token)
+                    .add("id",authUser.id)
+                    .build();
             return Response.ok(tokenJson).build();
         }catch (Exception e){
             e.printStackTrace();
@@ -74,6 +79,7 @@ public class UserController {
         JwtBuilder builder = Jwts.builder()
                 .claim("id", String.valueOf(user.id))
                 .claim("role", user.accountType)
+                .claim("email",user.email)
                 .setExpiration(new Date(expMillis))
                 .signWith(SignatureAlgorithm.HS512, key);
 
@@ -103,6 +109,7 @@ public class UserController {
                 if (encoder.matches(pass,rs.getString("pass"))){
                     user.id = Integer.parseInt(rs.getString("iduser"));
                     user.accountType = rs.getString("role");
+                    user.email = email;
                     return user;
                 }
                 else return null ;
@@ -119,6 +126,7 @@ public class UserController {
             }
         }
     }
+
 
     @Path("signup")
     @POST
@@ -190,8 +198,195 @@ public class UserController {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         String token = createToken(authUser);
-        JsonObject tokenJson = Json.createObjectBuilder().add("token",token).build();
+        JsonObject tokenJson = Json.createObjectBuilder()
+                .add("token",token)
+                .add("id",authUser.id)
+                .build();
         return Response.ok(tokenJson).build();
+    }
+
+
+    @Path("changepass")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response resetPass(String json) throws SQLException {
+        Integer id=0;
+        Gson gson = new Gson();
+        NewPass newpass = gson.fromJson(json, NewPass.class);
+        Authenticator auth = new Authenticator(newpass.getToken());
+        System.out.println("auth token " + auth.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+            id = auth.getUserid();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        System.out.println("auth getmail "+ auth.getEmail() );
+        System.out.println("newpass oldpass "+ newpass.getOldpass() );
+        UserInfo authUser = authenticateUser(auth.getEmail(), newpass.getOldpass());
+        if (authUser == null) {
+            System.out.println("There is not a user with given credentials");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        newpass.setPass(encoder.encode(newpass.getPass()));
+
+        Connection con = null;
+        PreparedStatement pSt = null;
+        try {
+            con = DBConnector.getInstance().getConnection();
+            String update = "UPDATE user SET pass = ? WHERE iduser = ?";
+            pSt = con.prepareStatement(update);
+            pSt.setString(1, newpass.getPass());
+            pSt.setInt(2, id );
+            pSt.execute();
+            return Response.ok().build();
+        } catch ( SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("myinfo")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response myInfo( String jsonToken ){
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(jsonToken, MyToken.class);
+        System.out.println("My token" + token.getToken());
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        User user = getUserByID(auth.getUserid());
+        if (user==null){
+            System.out.println("uyser is null");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        System.out.println("name" + user.getName() + "\n" +
+                "surname" + user.getSurname() + "\n" +
+                "email" + user.getEmail() + "\n" +
+                "phone" + user.getPhone() + "\n" +
+                "birhtday" + user.getBirthday() + "\n");
+        if (user.getPhone()==null)
+            user.setPhone("0");
+        JsonObject tokenJson = Json.createObjectBuilder()
+                .add("name",user.getName())
+                .add("surname",user.getSurname())
+                .add("email",user.getEmail())
+                .add("phone",user.getPhone())
+                .add("birthday",user.getBirthday())
+                .build();
+        return Response.ok(tokenJson).build();
+    }
+
+    private User getUserByID(int userid) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User user = new User();
+        String getUserSql = "SELECT name, surname, email , birthday , phone  " +
+                "FROM user " +
+                "WHERE iduser = ? LIMIT 1";
+        try{
+            con =  DBConnector.getInstance().getConnection();
+            ps  = con.prepareStatement(getUserSql);
+            ps.setInt(1,userid);
+            rs  = ps.executeQuery();
+            if(!rs.next()){
+                System.out.println("ResultSet is empty!");
+                return null ;
+            }
+            else {
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setEmail(rs.getString("email"));
+                user.setBirthday(rs.getString("birthday"));
+                user.setPhone(rs.getString("phone"));
+                return user;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally{
+            try {
+                con.close();
+                rs.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("update")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateInfo( String jsonToken ){
+        Gson gson = new Gson();
+        User user = gson.fromJson(jsonToken, User.class);
+        System.out.println("My token" + user.getToken());
+        Authenticator auth = new Authenticator(user.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        Connection con = null;
+        PreparedStatement pSt = null;
+        try {
+            con = DBConnector.getInstance().getConnection();
+            String update = "UPDATE user SET name = ?, surname = ? " +
+                    ", email = ? , phone = ? , birthday = ? WHERE iduser = ?";
+            pSt = con.prepareStatement(update);
+            pSt.setString(1, user.getName());
+            pSt.setString(2, user.getSurname());
+            pSt.setString(3, user.getEmail());
+            pSt.setString(4, user.getPhone());
+            pSt.setString(5, user.getBirthday());
+            pSt.setInt(6, auth.getUserid() );
+            pSt.execute();
+            return Response.ok().build();
+        } catch ( SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println("name" + user.getName() + "\n" +
+                    "surname" + user.getSurname() + "\n" +
+                    "email" + user.getEmail() + "\n" +
+                    "phone" + user.getPhone() + "\n" +
+                    "birhtday" + user.getBirthday() + "\n");
+
+            return Response.ok().build();
+        }
     }
 }
 
