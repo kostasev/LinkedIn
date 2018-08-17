@@ -1,1 +1,38 @@
-
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-3">
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" [src]="imageToShow" alt="Place image title" *ngIf="!isImageLoading; else noImageFound">
+    <ng-template #noImageFound>
+      <img class="card-img-top" src="assets/user-default.png" alt="Fallbackimage">
+    </ng-template>
+    <div class="card-body">
+      <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
+      <p>{{user.email}}</p>
+      <input type="hidden" value="{{user.id}}">
+      <a *ngIf="!isme()" class="btn btn-primary" routerLink="/message/{{user.id}}">Send Message</a>
+      <a *ngIf="isme()" class="btn btn-primary" routerLink="/settings">Edit Profile</a>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-5">
+    <div class="row">
+      <div class="col-md-11"><h3>Work Experience</h3></div><button *ngIf="isme()" type="button" class="btn">+</button>
+    </div>
+    <br>
+    <app-skill [type]="0" [isme]="isme()"></app-skill>
+    <br>
+    <div class="row">
+      <div class="col-md-11"><h3>Education</h3></div ><button *ngIf="isme()" type="button" class="btn">+</button>
+    </div>
+    <br>
+    <app-skill [type]="1"></app-skill>
+    <br>
+    <div class="row">
+      <div class="col-md-11"><h3>Skills</h3></div><button *ngIf="isme()" type="button" class="btn">+</button>
+    </div>
+    <br>
+    <app-skill [type]="2"></app-skill>
+  </div>
+  <div class="col-md-2"></div>
+</div>

@@ -16,6 +16,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { ChangePassComponent } from './change-pass/change-pass.component';
+import { SkillComponent } from './skill/skill.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ChangePassComponent } from './change-pass/change-pass.component';
     SettingsComponent,
     ProfileComponent,
     ChangeInfoComponent,
-    ChangePassComponent
+    ChangePassComponent,
+    SkillComponent
   ],
   imports: [
     BrowserModule,

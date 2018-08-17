@@ -292,6 +292,7 @@ public class UserController {
                 .add("email",user.getEmail())
                 .add("phone",user.getPhone())
                 .add("birthday",user.getBirthday())
+                .add("id",auth.getUserid())
                 .build();
         return Response.ok(tokenJson).build();
     }

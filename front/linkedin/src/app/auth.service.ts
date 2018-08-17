@@ -11,6 +11,7 @@ export class AuthService {
   private ChangePss  = 'http://localhost:8080/linkedin/api/user/changepass';
   private GetInfo    = 'http://localhost:8080/linkedin/api/user/myinfo';
   private UpdateUser = 'http://localhost:8080/linkedin/api/user/update';
+  private GetSkills  = 'http://localhost:8080/linkedin/api/profile/getskills';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -53,6 +54,13 @@ export class AuthService {
     console.log(user);
     user['token'] = localStorage.getItem('token');
     return this.http.post<any>(this.UpdateUser, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  getUserSkills(user) {
+    return this.http.post<any>(this.GetSkills, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});

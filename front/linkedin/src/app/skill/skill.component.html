@@ -1,0 +1,14 @@
+
+<div class="card" *ngFor="let skill of skills">
+  <div class="card-body" *ngIf="skill.type == type">
+    <div class="row">
+      <div class="col-md-8">
+        <b>{{skill.name}}</b>
+      </div>
+      <p>{{skill.date_start}} to {{skill.date_end}}</p>
+    </div>
+    <p>{{skill.description}}</p>
+    <button *ngIf="isme" type="button" class="btn">edit</button>
+  </div>
+</div>
+
