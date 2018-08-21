@@ -10,6 +10,7 @@ import {ImageService} from '../image.service';
 export class ProfileComponent implements OnInit {
   user = {};
 
+  selectedFile: File = null;
   imageToShow: any;
   isImageLoading: boolean;
   constructor(private _auth: AuthService,
@@ -44,8 +45,19 @@ export class ProfileComponent implements OnInit {
       this.createImageFromBlob(data);
       this.isImageLoading = false;
     }, error => {
-      this.isImageLoading = false;
+      this.isImageLoading = true;
       console.log(error);
     });
+  }
+
+  onFileSelect(event) {
+    console.log(event);
+    this.selectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    this.imageService.onUpload(fd).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    );
   }
 }
