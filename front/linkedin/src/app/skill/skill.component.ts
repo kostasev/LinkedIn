@@ -7,12 +7,15 @@ import {AuthService} from '../auth.service';
   styleUrls: ['./skill.component.css']
 })
 export class SkillComponent implements OnInit {
+  skilldel = {};
   private user = {};
   public skills = [];
   @Input()
   type: number;
   @Input()
-  isme: boolean;
+  is_me: boolean;
+  @Input()
+  id: number;
   constructor(private _auth: AuthService) { }
 
   ngOnInit() {
@@ -21,8 +24,20 @@ export class SkillComponent implements OnInit {
 
   getSkills() {
     this.user['token'] = localStorage.getItem('token');
-    this.user['id'] = localStorage.getItem('id');
+    this.user['id'] = this.id;
     this._auth.getUserSkills(this.user)
-      .subscribe(res => this.skills = res );
+      .subscribe(res => {
+        this.skills = res;
+        console.log(this.skills);
+      } );
+  }
+
+  deleteSkill(id) {
+    this.skilldel['id'] = id;
+    this.skilldel['token'] = localStorage.getItem('token');
+    this._auth.deleteSkillById(this.skilldel).subscribe(
+      res => console.log(res),
+      error => console.log(error)
+    );
   }
 }

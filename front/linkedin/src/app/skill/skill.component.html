@@ -3,12 +3,13 @@
   <div class="card-body" *ngIf="skill.type == type">
     <div class="row">
       <div class="col-md-8">
-        <b>{{skill.name}}</b>
+        <b>{{skill.skill}}</b>
       </div>
-      <p>{{skill.date_start}} to {{skill.date_end}}</p>
+      <p>{{skill.datetime_start | date:'mm-yyyy' }} to {{skill.datetime_end | date:'mm-yyyy' }}</p>
     </div>
     <p>{{skill.description}}</p>
-    <button *ngIf="isme" type="button" class="btn">edit</button>
+    <button *ngIf="is_me" type="button" class="btn"  >edit</button>
+    <button *ngIf="is_me" type="button" class="btn" (click)="deleteSkill(skill.idskill)" style="margin-left: 10px;">delete</button>
   </div>
 </div>
 

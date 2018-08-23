@@ -13,7 +13,8 @@ export class ChangeInfoComponent implements OnInit {
 
   ngOnInit() {
     this.user['token'] = localStorage.getItem('token');
-    this._auth.getMyInfo(this.user)
+    this.user['id'] = localStorage.getItem('id');
+    this._auth.getInfoById(this.user)
       .subscribe(res => this.user = res );
     console.log(this.user);
   }

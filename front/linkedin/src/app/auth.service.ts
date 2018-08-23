@@ -9,9 +9,10 @@ export class AuthService {
   private LoginUrl   = 'http://localhost:8080/linkedin/api/user/login';
   private SignupUrl  = 'http://localhost:8080/linkedin/api/user/signup';
   private ChangePss  = 'http://localhost:8080/linkedin/api/user/changepass';
-  private GetInfo    = 'http://localhost:8080/linkedin/api/user/myinfo';
+  private GetInfo    = 'http://localhost:8080/linkedin/api/user/info';
   private UpdateUser = 'http://localhost:8080/linkedin/api/user/update';
   private GetSkills  = 'http://localhost:8080/linkedin/api/profile/getskills';
+  private DeleteSkillUrl = 'http://localhost:8080/linkedin/api/profile/deleteskill';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -44,8 +45,8 @@ export class AuthService {
       })});
   }
 
-  getMyInfo(token) {
-    return this.http.post<any>(this.GetInfo, token, {
+  getInfoById(user) {
+    return this.http.post<any>(this.GetInfo, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});
@@ -61,6 +62,13 @@ export class AuthService {
 
   getUserSkills(user) {
     return this.http.post<any>(this.GetSkills, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  deleteSkillById(user) {
+    return this.http.post(this.DeleteSkillUrl, user,{
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});

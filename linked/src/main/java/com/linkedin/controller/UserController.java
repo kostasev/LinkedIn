@@ -259,7 +259,7 @@ public class UserController {
         }
     }
 
-    @Path("myinfo")
+    @Path("info")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response myInfo( String jsonToken ){
@@ -274,7 +274,12 @@ public class UserController {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        User user = getUserByID(auth.getUserid());
+        User user = null ;
+        if (token.getId()!=0) {
+            user = getUserByID(token.getId());
+        }else{
+            user = getUserByID(auth.getUserid());
+            }
         if (user==null){
             System.out.println("uyser is null");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -295,47 +300,6 @@ public class UserController {
                 .add("id",auth.getUserid())
                 .build();
         return Response.ok(tokenJson).build();
-    }
-
-    private User getUserByID(int userid) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        User user = new User();
-        String getUserSql = "SELECT name, surname, email , birthday , phone  " +
-                "FROM user " +
-                "WHERE iduser = ? LIMIT 1";
-        try{
-            con =  DBConnector.getInstance().getConnection();
-            ps  = con.prepareStatement(getUserSql);
-            ps.setInt(1,userid);
-            rs  = ps.executeQuery();
-            if(!rs.next()){
-                System.out.println("ResultSet is empty!");
-                return null ;
-            }
-            else {
-                user.setName(rs.getString("name"));
-                user.setSurname(rs.getString("surname"));
-                user.setEmail(rs.getString("email"));
-                user.setBirthday(rs.getString("birthday"));
-                user.setPhone(rs.getString("phone"));
-                return user;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally{
-            try {
-                con.close();
-                rs.close();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
     }
 
     @Path("update")
@@ -389,7 +353,50 @@ public class UserController {
             return Response.ok().build();
         }
     }
+
+    private User getUserByID(int userid) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        User user = new User();
+        String getUserSql = "SELECT name, surname, email , birthday , phone  " +
+                "FROM user " +
+                "WHERE iduser = ? LIMIT 1";
+        try{
+            con =  DBConnector.getInstance().getConnection();
+            ps  = con.prepareStatement(getUserSql);
+            ps.setInt(1,userid);
+            rs  = ps.executeQuery();
+            if(!rs.next()){
+                System.out.println("ResultSet is empty!");
+                return null ;
+            }
+            else {
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setEmail(rs.getString("email"));
+                user.setBirthday(rs.getString("birthday"));
+                user.setPhone(rs.getString("phone"));
+                return user;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally{
+            try {
+                con.close();
+                rs.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+
 
 
 

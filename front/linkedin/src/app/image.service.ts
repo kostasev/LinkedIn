@@ -13,6 +13,6 @@ export class ImageService {
   }
 
   onUpload(fd) {
-    return this.http.post('http://localhost:8080/linkedin/api/profile/picture/upload', fd);
+    return this.http.post('http://localhost:8080/linkedin/api/profile/upload', fd );
   }
 }
