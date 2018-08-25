@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-network',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./network.component.css']
 })
 export class NetworkComponent implements OnInit {
-
-  constructor() { }
+  connections = [];
+  user = {};
+  noConns = false;
+  constructor(private _auth: AuthService) { }
 
   ngOnInit() {
+    this.getConnections();
+  }
+
+  getConnections() {
+    this.user['token'] = localStorage.getItem('token');
+    this.user['id'] = localStorage.getItem('id');
+    this._auth.getUserConnections(this.user)
+      .subscribe(res =>
+        this.connections = res,
+        err => this.noConns = true);
   }
 
 }

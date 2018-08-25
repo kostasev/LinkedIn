@@ -18,6 +18,7 @@ export class AuthService {
   private ConnectedUrl = 'http://localhost:8080/linkedin/api/profile/isconnected';
   private ConnectUrl = 'http://localhost:8080/linkedin/api/network/connect';
   private DelConnectUrl = 'http://localhost:8080/linkedin/api/network/delconnect';
+  private GetConnections = 'http://localhost:8080/linkedin/api/network/connections';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -109,6 +110,13 @@ export class AuthService {
 
   delConnect(user) {
     return this.http.post(this.DelConnectUrl, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  getUserConnections(user) {
+    return this.http.post<any>(this.GetConnections, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});

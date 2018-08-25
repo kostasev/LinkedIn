@@ -1,3 +1,18 @@
-<p>
-  network works!
-</p>
+<div class="container">
+<div class="col-md-3"></div>
+  <div *ngIf="noConns"><h1>No Connections yet :(</h1></div>
+<div class="card" *ngFor="let user of connections" style="margin-bottom: 15px;">
+  <div class="card-body"  routerLink="/profile/{{user.iduser}}">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <img src="http://localhost:8080/linkedin/api/profile/picture/{{user.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+      <div class="col-md-1"></div>
+      <div class="col-md-6">
+        <b>{{user.name}} {{user.surname}} </b>
+        <p>{{user.email}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3"></div>
+</div>

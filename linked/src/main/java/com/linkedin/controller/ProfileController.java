@@ -334,7 +334,7 @@ public class ProfileController {
         return Response.ok().build();
     }
 
-    @Path("skill")
+    @Path("updateskill")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

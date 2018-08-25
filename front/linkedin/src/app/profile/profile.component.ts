@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit {
   }
 
 
+
   delConnection() {
     this.route.params.subscribe(params => {
       this.usr['id'] = params['id'];
