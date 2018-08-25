@@ -1,5 +1,5 @@
 
-<div class="card" *ngFor="let skill of skills">
+<div class="card" *ngFor="let skill of skills; let i = index;">
   <div class="card-body" *ngIf="skill.type == type">
     <div class="row">
       <div class="col-md-8">
@@ -8,8 +8,39 @@
       <p>{{skill.datetime_start | date:'mm-yyyy' }} to {{skill.datetime_end | date:'mm-yyyy' }}</p>
     </div>
     <p>{{skill.description}}</p>
-    <button *ngIf="is_me" type="button" class="btn"  >edit</button>
-    <button *ngIf="is_me" type="button" class="btn" (click)="deleteSkill(skill.idskill)" style="margin-left: 10px;">delete</button>
+    <button *ngIf="is_me" type="button" class="btn" (click)="open(content,skill)">edit</button>
+    <button *ngIf="is_me" type="button" class="btn" (click)="deleteSkill(skill.idskill,i)" style="margin-left: 10px;">delete</button>
   </div>
-</div>
 
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Skill</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        Skill<input  [(ngModel)]="editSkill.skill" id="skill" class="form-control" placeholder="Skill" name="skill" ><br>
+        Description<input [(ngModel)]="editSkill.description" id="description" class="form-control" placeholder="Description" name="description"><br>
+        Date Start<input [(ngModel)]="editSkill.datetime_start " type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
+        Date End<input [(ngModel)]="editSkill.datetime_end" type="date" class="form-control" name="datetime_end" id="datetime_end"><br>
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="editSkill.visible">
+          <label  ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" name="visible" value="public" [(ngModel)]="editSkill.visible"> Public
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" name="visible" value="private" [(ngModel)]="editSkill.visible"> Private
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateSkill(); c('Save');">Save</button>
+  </div>
+</ng-template>
+
+</div>

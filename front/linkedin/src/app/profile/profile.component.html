@@ -19,25 +19,29 @@
       >
       <a *ngIf="isMe" class="btn btn-primary" (click)="fileInput.click()">Upload Profile Image</a><br><br>
       <a *ngIf="isMe" class="btn btn-primary" routerLink="/settings">Edit Profile</a>
+      <div *ngIf="!isMe">
+        <a  *ngIf="!connected" class="btn btn-primary"  (click)="addConnection()">{{conMessage}}</a>
+        <a  *ngIf="connected" class="btn btn-primary"  (click)="delConnection()">{{delMessage}}</a>
+      </div>
     </div>
   </div>
   </div>
 
   <div class="col-md-5">
     <div class="row">
-      <div class="col-md-11"><h3>Work Experience</h3></div><button *ngIf="isMe" type="button" class="btn">+</button>
+      <div class="col-md-11"><h3>Work Experience</h3></div><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 0)">+</button>
     </div>
     <br>
     <app-skill [type]="0" [is_me]="isMe" [id]="user['id']"></app-skill>
     <br>
     <div class="row">
-      <div class="col-md-11"><h3>Education</h3></div ><button *ngIf="isMe" type="button" class="btn">+</button>
+      <div class="col-md-11"><h3>Education</h3></div ><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 1)">+</button>
     </div>
     <br>
     <app-skill [type]="1" [is_me]="isMe" [id]="user['id']"></app-skill>
     <br>
     <div class="row">
-      <div class="col-md-11"><h3>Skills</h3></div><button *ngIf="isMe" type="button" class="btn">+</button>
+      <div class="col-md-11"><h3>Skills</h3></div><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 2)">+</button>
     </div>
     <br>
     <app-skill [type]="2" [is_me]="isMe" [id]="user['id']"></app-skill>
@@ -49,7 +53,7 @@
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Skill</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -57,25 +61,23 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label for="dateOfBirth">Date of birth</label>
-        <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
-              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-            </button>
-          </div>
+        Skill<input [(ngModel)]="addSkill.skill" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
+        Description<input [(ngModel)]="addSkill.description" id="description" class="form-control" placeholder="Description" name="dp"><br>
+        Date Start<input [(ngModel)]="addSkill.datetime_start" type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
+        Date End<input [(ngModel)]="addSkill.datetime_end" type="date" class="form-control" name="datetime_end" id="datetime_end"><br>
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="model">
+          <label  ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" name="visible" value="public" [(ngModel)]="addSkill.visible"> Public
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" name="visible" value="private" [(ngModel)]="addSkill.visible"> Private
+          </label>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="sendSkill(); c('Save');">Save</button>
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
-
-<hr>
-
-<pre>{{closeResult}}</pre>

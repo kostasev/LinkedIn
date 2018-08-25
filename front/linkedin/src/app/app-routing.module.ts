@@ -5,6 +5,7 @@ import {RegisterComponent} from './register/register.component';
 import {AuthGuard} from './auth.guard';
 import {SettingsComponent} from './settings/settings.component';
 import {ProfileComponent} from './profile/profile.component';
+import {NetworkComponent} from './network/network.component';
 
 
 const routes: Routes = [
@@ -31,10 +32,13 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
+    path: 'network',
+    component: NetworkComponent
+  },
+  {
     path: '**',
     redirectTo: ''
   }
-
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { ChangePassComponent } from './change-pass/change-pass.component';
 import { SkillComponent } from './skill/skill.component';
+import { NetworkComponent } from './network/network.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SkillComponent } from './skill/skill.component';
     ProfileComponent,
     ChangeInfoComponent,
     ChangePassComponent,
-    SkillComponent
+    SkillComponent,
+    NetworkComponent
   ],
   imports: [
     BrowserModule,

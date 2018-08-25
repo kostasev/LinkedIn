@@ -13,6 +13,11 @@ export class AuthService {
   private UpdateUser = 'http://localhost:8080/linkedin/api/user/update';
   private GetSkills  = 'http://localhost:8080/linkedin/api/profile/getskills';
   private DeleteSkillUrl = 'http://localhost:8080/linkedin/api/profile/deleteskill';
+  private NewSkillUrl = 'http://localhost:8080/linkedin/api/profile/addskill';
+  private UpdateSkillUrl = 'http://localhost:8080/linkedin/api/profile/updateskill';
+  private ConnectedUrl = 'http://localhost:8080/linkedin/api/profile/isconnected';
+  private ConnectUrl = 'http://localhost:8080/linkedin/api/network/connect';
+  private DelConnectUrl = 'http://localhost:8080/linkedin/api/network/delconnect';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -68,7 +73,42 @@ export class AuthService {
   }
 
   deleteSkillById(user) {
-    return this.http.post(this.DeleteSkillUrl, user,{
+    return this.http.post(this.DeleteSkillUrl, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  newSkill(skill) {
+    return this.http.post(this.NewSkillUrl, skill, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  changeSkill(skill) {
+    return this.http.post(this.UpdateSkillUrl, skill, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  isConnected(user) {
+    return this.http.post(this.ConnectedUrl, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  connect(user) {
+    return this.http.post(this.ConnectUrl, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  delConnect(user) {
+    return this.http.post(this.DelConnectUrl, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});

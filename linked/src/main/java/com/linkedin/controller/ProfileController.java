@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.linkedin.db.DBConnector;
 import com.linkedin.pojos.MyToken;
 import com.linkedin.pojos.NewPass;
+import com.linkedin.pojos.Skill;
 import com.linkedin.security.Authenticator;
 import com.linkedin.utilities.ResultSetToJsonMapper;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -34,7 +35,7 @@ public class ProfileController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getSkills(String json) throws IOException, SQLException  {
+    public Response getSkills(String json) throws IOException, SQLException {
         Gson gson = new Gson();
         MyToken token = gson.fromJson(json, MyToken.class);
         Authenticator auth = new Authenticator(token.getToken());
@@ -42,52 +43,106 @@ public class ProfileController {
         try {
             auth.authenticate(auth.getToken());
             System.out.println("Authenticated Token with user type " + auth.getType());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
-        if(token.getId()==0) token.setId(auth.getUserid());
-        if ((auth.getUserid()==token.getId())||(isConnected(auth.getUserid(), token.getId()))){
-            String allSkills = "SELECT idskill, skill, datetime_start, datetime_end, type, description FROM skills " +
-                    "WHERE iduser = ?";
+        if (token.getId() == 0) token.setId(auth.getUserid());
+        String allSkills = null;
+        if ((auth.getUserid() == token.getId()) || (isConnected(auth.getUserid(), token.getId()))) {
+            allSkills = "SELECT idskill, skill, datetime_start, datetime_end, type, description , visible FROM skills " +
+                    "WHERE iduser = ? ";
+        } else {
+            allSkills = "SELECT idskill, skill, datetime_start, datetime_end, type, description , visible FROM skills " +
+                    "WHERE iduser = ? AND visible = 'public'";
+        }
+        try {
+            pSt = con.prepareStatement(allSkills);
+            pSt.setInt(1, token.getId());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.toString());
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
             try {
-                pSt = con.prepareStatement(allSkills);
-                pSt.setInt(1, token.getId());
-                rs = pSt.executeQuery();
-                System.out.println("AFTO TO KATI POU THELW "+ token.getId());
-                if(!rs.next()){
-                    return Response.ok("empty skills").build();
-                }
-                else {
-                    JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
-                    System.out.println(jarray.toString());
-                    return Response.ok(jarray.toString()).build();
-                }
+                con.close();
+                rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-            finally {
-                try {
-                    con.close();
-                    rs.close();
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
-            }
-
         }
-        else {
-            //return only public skills
-        }
-        return Response.ok("empty skills").build();
     }
 
-    private boolean isConnected(int userid, int id) {
-        return true;
+    private boolean isConnected(int userid, int id) throws IOException {
+        PreparedStatement pSt = null;
+        Connection con = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnector.getInstance().getConnection();
+            rs = null;
+            String getConnectionStatus = "select * " +
+                    "from (select * from connection " +
+                    "where iduser1 = ? " +
+                    "union " +
+                    "select a.iduser2 as iduser1 , a.iduser1 as iduser2, status " +
+                    "from connection a " +
+                    "where iduser2 = ? ) as a " +
+                    "where a.iduser2 = ? ";
+            pSt = con.prepareStatement(getConnectionStatus);
+            pSt.setInt(1, userid);
+            pSt.setInt(2, userid);
+            pSt.setInt(3, id);
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("ResultSet is empty!");
+                return false;
+            } else {
+                System.out.println(rs.getBoolean("status"));
+                return rs.getBoolean("status");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("isconnected")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getConnection(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        Boolean connected = isConnected(auth.getUserid(),token.getId());
+        JsonObject ans = Json.createObjectBuilder()
+                .add("connected",connected)
+                .build();
+        return Response.ok(ans).build();
     }
 
     @Path("picture/{id}")
@@ -108,27 +163,23 @@ public class ProfileController {
         Response.ResponseBuilder response = Response.ok((Object) file).header("content-type", "image/jpg");
 
         return response.build();
-        //return Response.ok().build();
-
-        // uncomment line below to send streamed
-        // return Response.ok(new ByteArrayInputStream(imageData)).build();
     }
 
     @Path("upload")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile( @FormDataParam("file") InputStream fileInputStream,
-                                @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
-                                @FormDataParam("token") String token) {
+    public Response uploadFile(@FormDataParam("file") InputStream fileInputStream,
+                               @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+                               @FormDataParam("token") String token) {
         Authenticator auth = new Authenticator(token);
         try {
             auth.authenticate(auth.getToken());
             System.out.println("Authenticated Token with user type " + auth.getType());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        String filePath = "C:/Users/Public/ProfPictures/"+ auth.getUserid() + ".jpg";
+        String filePath = "C:/Users/Public/ProfPictures/" + auth.getUserid() + ".jpg";
 
         // save the file to the server
         saveFile(fileInputStream, filePath);
@@ -146,7 +197,7 @@ public class ProfileController {
         try {
             File file = new File(serverLocation);
             file.delete();
-            OutputStream outpuStream = new FileOutputStream( new File(serverLocation),false);
+            OutputStream outpuStream = new FileOutputStream(new File(serverLocation), false);
             int read = 0;
             byte[] bytes = new byte[1024];
 
@@ -174,27 +225,27 @@ public class ProfileController {
         try {
             auth.authenticate(auth.getToken());
             System.out.println("Authenticated Token with user type " + auth.getType());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
-        if ( mySkill(auth.getUserid(),token.getId())){
+        if (mySkill(auth.getUserid(), token.getId())) {
             try {
                 String delSkill = "DELETE  FROM skills " +
                         "WHERE idskill = ?";
                 pSt = con.prepareStatement(delSkill);
                 pSt.setInt(1, token.getId());
                 pSt.executeUpdate();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            }finally{
+            } finally {
                 try {
                     con.close();
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -209,19 +260,18 @@ public class ProfileController {
         String myPost = "SELECT iduser " +
                 "FROM skills " +
                 "WHERE idskill = ? LIMIT 1";
-        try{
-            con =  DBConnector.getInstance().getConnection();
-            ps  = con.prepareStatement(myPost);
-            ps.setInt(1,id);
-            rs  = ps.executeQuery();
-            if(!rs.next()){
+        try {
+            con = DBConnector.getInstance().getConnection();
+            ps = con.prepareStatement(myPost);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (!rs.next()) {
                 System.out.println("ResultSet is empty!");
-                return false ;
-            }
-            else {
-                if( Integer.parseInt(rs.getString("iduser")) == userid )
+                return false;
+            } else {
+                if (Integer.parseInt(rs.getString("iduser")) == userid)
                     return true;
-                else return false ;
+                else return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -229,14 +279,104 @@ public class ProfileController {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally{
+        } finally {
             try {
                 con.close();
                 rs.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    @Path("addskill")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addSkill(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        Skill skill = gson.fromJson(json, Skill.class);
+        Authenticator auth = new Authenticator(skill.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        try {
+            String addSkill = "INSERT INTO skills " +
+                    "(skill,description,datetime_start,datetime_end,visible,iduser,type) " +
+                    "values " +
+                    "(?,?,?,?,?,?,?)";
+            pSt = con.prepareStatement(addSkill);
+            pSt.setString(1, skill.getSkill());
+            pSt.setString(2, skill.getDescription());
+            pSt.setString(3, skill.getDatetime_start());
+            pSt.setString(4, skill.getDatetime_end());
+            pSt.setString(5, skill.getVisible());
+            pSt.setInt(6, auth.getUserid());
+            pSt.setInt(7, skill.getType());
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.ok().build();
+    }
+
+    @Path("skill")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateSkill(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        Skill skill = gson.fromJson(json, Skill.class);
+        Authenticator auth = new Authenticator(skill.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        try {
+            String addSkill = "UPDATE skills SET " +
+                    "skill = ? ,description = ? ,datetime_start = ? ," +
+                    " datetime_end = ? ,visible = ? " +
+                    "WHERE idskill = ? ";
+            pSt = con.prepareStatement(addSkill);
+            pSt.setString(1, skill.getSkill());
+            pSt.setString(2, skill.getDescription());
+            pSt.setString(3, skill.getDatetime_start());
+            pSt.setString(4, skill.getDatetime_end());
+            pSt.setString(5, skill.getVisible());
+            pSt.setInt(6, skill.getIdskill());
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.ok().build();
+    }
+
 
 }
