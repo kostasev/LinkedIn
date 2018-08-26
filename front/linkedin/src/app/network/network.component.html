@@ -1,5 +1,14 @@
+<div class="row">
+  <div class="col-md-1"></div>
+    <form class="form-inline my-1 my-lg-0">
+      <input [(ngModel)]="search" name="search" class="form-control mr-sm-1" type="search" placeholder="Search For Users" aria-label="Search">
+      <button class="btn btn-outline-success my-1 my-sm-0" type="submit" (click)="getSearch()">Search</button>
+    </form>
+</div>
+<br>
 <div class="container">
 <div class="col-md-3"></div>
+  <div *ngIf="noRes"><h1>No Results Found</h1></div>
   <div *ngIf="noConns"><h1>No Connections yet :(</h1></div>
 <div class="card" *ngFor="let user of connections" style="margin-bottom: 15px;">
   <div class="card-body"  routerLink="/profile/{{user.iduser}}">

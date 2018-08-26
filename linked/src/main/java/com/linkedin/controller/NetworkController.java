@@ -3,6 +3,7 @@ package com.linkedin.controller;
 import com.google.gson.Gson;
 import com.linkedin.db.DBConnector;
 import com.linkedin.pojos.MyToken;
+import com.linkedin.pojos.Search;
 import com.linkedin.security.Authenticator;
 import com.linkedin.utilities.ResultSetToJsonMapper;
 import org.json.JSONArray;
@@ -257,6 +258,54 @@ public class NetworkController {
             pSt = con.prepareStatement(allConns);
             pSt.setInt(1, auth.getUserid());
             pSt.setInt(2, auth.getUserid());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("search")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getSearch(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        Search user = gson.fromJson(json, Search.class);
+        Authenticator auth = new Authenticator(user.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String srcConns = "select iduser , name , surname , email " +
+                "from user where name = ? or surname = ? " +
+                "and name=? or surname = ? ";
+        try {
+            pSt = con.prepareStatement(srcConns);
+            pSt.setString(1, user.getName());
+            pSt.setString(2, user.getSurname());
+            pSt.setString(3, user.getSurname());
+            pSt.setString(4, user.getName());
             rs = pSt.executeQuery();
             if (!rs.next()) {
                 return Response.status(Response.Status.NOT_FOUND).build();
