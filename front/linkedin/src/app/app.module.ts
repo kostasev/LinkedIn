@@ -18,6 +18,11 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
 import { ChangePassComponent } from './change-pass/change-pass.component';
 import { SkillComponent } from './skill/skill.component';
 import { NetworkComponent } from './network/network.component';
+import { MessagesComponent } from './messages/messages.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { PostsComponent } from './posts/posts.component';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,12 @@ import { NetworkComponent } from './network/network.component';
     ChangeInfoComponent,
     ChangePassComponent,
     SkillComponent,
-    NetworkComponent
+    NetworkComponent,
+    MessagesComponent,
+    NotificationsComponent,
+    JobsComponent,
+    PostsComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

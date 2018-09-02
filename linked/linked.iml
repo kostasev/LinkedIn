@@ -60,5 +60,6 @@
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5 - WebSocket" level="application_server_libraries" />
   </component>
 </module>

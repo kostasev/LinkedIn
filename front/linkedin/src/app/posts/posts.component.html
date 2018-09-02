@@ -1,0 +1,21 @@
+<div *ngFor="let post of posts">
+  <div class="card" style="margin-top: 14px;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-2">
+          <img src="http://localhost:8080/linkedin/api/profile/picture/{{post.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+        </div>
+        <div>
+          <h5 class="card-title">{{post.name}} {{post.surname}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{post.time}}</h6>
+        </div>
+      </div>
+      <p class="card-text">{{post.post}}</p>
+      <a href="#" class="card-link">Like {{post.likes}}</a>
+      <a href="#" class="card-link" (click)="comment = true; post_id = post.idpost">Comment</a>
+      <div *ngIf="comment && (post.idpost ==post_id )">
+        <app-comments></app-comments>
+      </div>
+    </div>
+  </div>
+</div>

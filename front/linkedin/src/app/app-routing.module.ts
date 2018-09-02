@@ -6,6 +6,9 @@ import {AuthGuard} from './auth.guard';
 import {SettingsComponent} from './settings/settings.component';
 import {ProfileComponent} from './profile/profile.component';
 import {NetworkComponent} from './network/network.component';
+import {MessagesComponent} from './messages/messages.component';
+import {JobsComponent} from './jobs/jobs.component';
+import {NotificationsComponent} from './notifications/notifications.component';
 
 
 const routes: Routes = [
@@ -24,8 +27,20 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'jobs',
+    component: JobsComponent
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent
+  },
+  {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent
   },
   {
     path: 'profile/:id',
