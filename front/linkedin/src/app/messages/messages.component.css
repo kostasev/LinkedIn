@@ -1,0 +1,11 @@
+img {
+  border-radius: 50%;
+  width:30px;
+  height:30px;
+}
+
+#scroll {
+  width: 1000px;
+  height: 800px;
+  overflow: auto;
+}

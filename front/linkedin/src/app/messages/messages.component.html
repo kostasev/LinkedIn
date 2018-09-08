@@ -1,3 +1,26 @@
-<p>
-  messages works!
-</p>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-11">
+    <h5>Your Messages</h5>
+    <hr>
+  </div>
+</div>
+
+
+<div class="row" >
+  <div class="col-md-1"></div>
+  <div class="col-md-3" id="scroll">
+    <div class="card" *ngFor="let user of msgUsers" style="margin-bottom: 11px;">
+      <div class="card-body"  routerLink="/profile/{{user.id}}">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <img src="http://localhost:8080/linkedin/api/profile/picture/{{user.id}}"  onError="this.src='../../assets/user-default.png'" >
+          <div class="col-md-1"></div>
+          <div class="col-md-8">
+            <b>{{user.name}} {{user.surname}}</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,138 @@
-<p>
-  jobs works!
-</p>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-2">
+    <a class="btn btn-primary" (click)="open(content, 2)">+ Create Job</a>
+  </div>
+</div>
+<br>
+<br>
+<!-- This is for my jobs-->
+<div class="row">
+  <div class="col-md-2"></div>
+  <div>
+    <h5>My Jobs</h5>
+    <hr>
+    <div class="container">
+    <div class="row">
+      <div *ngFor="let jb of jobs" class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <img class="card-img-top" data-holder-rendered="true">
+          <div class="card-title">
+            <h6 align="center" style="border-top-width: 25px; margin-top: 25px;">{{jb.title}}</h6>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{jb.description}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Edit</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Applicants</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <a href="#" id="seeall">See All</a>
+</div>
+<!-- This is for Network jobs -->
+<div class="row">
+  <div class="col-md-2"></div>
+  <div>
+    <h5>My Network</h5>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let jb of jobs" class="col-md-3">
+          <div class="card mb-4 shadow-sm">
+            <img class="card-img-top" data-holder-rendered="true">
+            <div class="card-title">
+              <h6 align="center" style="border-top-width: 25px; margin-top: 25px;">{{jb.title}}</h6>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{jb.description}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" id="seeall">See All</a>
+</div>
+<!-- This is for NN jobs-->
+<div class="row">
+  <div class="col-md-2"></div>
+  <div>
+    <h5>Suggested Jobs</h5>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let jb of jobs" class="col-md-3">
+          <div class="card mb-4 shadow-sm">
+            <img class="card-img-top" data-holder-rendered="true">
+            <div class="card-title">
+              <h6 align="center" style="border-top-width: 25px; margin-top: 25px;">{{jb.title}}</h6>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{jb.description}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Apply</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" id="seeall">See All</a>
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Job</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      Title<input [(ngModel)]="editjb.title" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
+      Description<input [(ngModel)]="editjb.description" id="description" class="form-control" placeholder="Description" name="dp"><br>
+      Skills<input [(ngModel)]="editjb.skills" type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Job</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      Title<input [(ngModel)]="editjb.title" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
+      Description<input [(ngModel)]="editjb.description" id="description" class="form-control" placeholder="Description" name="dp"><br>
+      Skills<input [(ngModel)]="editjb.skills" type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark">Save</button>
+  </div>
+</ng-template>
