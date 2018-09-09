@@ -6,6 +6,14 @@ img {
 
 #scroll {
   width: 1000px;
-  height: 800px;
+  height: 700px;
+  overflow: auto;
+}
+
+#window_msg {
+  background: #f7f7f7;
+  width: 90%;
+  height: 600px;
+  margin-bottom: 15px;
   overflow: auto;
 }

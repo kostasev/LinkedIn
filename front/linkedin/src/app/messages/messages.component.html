@@ -5,8 +5,6 @@
     <hr>
   </div>
 </div>
-
-
 <div class="row" >
   <div class="col-md-1"></div>
   <div class="col-md-3" id="scroll">
@@ -21,6 +19,44 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="container">
+      <div class="row" id="window_msg">
+        <div class="container">
+        <div class="row" *ngFor="let msg of messages">
+        <div class="col-md-5">
+          <div class="card" style="background-color: #1fa4ff7d;
+              margin-top: 10px;" *ngIf="myId != msg.id">
+            <div class="card-body">
+              {{msg.text}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+          <div class="card" style="margin-top: 10px;" *ngIf="myId == msg.id">
+            <div class="card-body">
+              {{msg.text}}
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+      </div>
+        <form>
+          <div class="row">
+            <div class="col-md-8">
+              <input type="text" class="form-control" placeholder="Message">
+            </div>
+            <div class="col">
+              <a class="btn btn-primary" >Send Message</a>
+            </div>
+          </div>
+        </form>
+
     </div>
   </div>
 </div>

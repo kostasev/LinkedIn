@@ -1,3 +1,49 @@
-<p>
-  notifications works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <h5>Connection Requests</h5>
+  </div>
+  <hr>
+  <br>
+  <div class="col-md-3"></div>
+  <div class="card" *ngFor="let cnn of connections" style="margin-bottom: 15px;">
+    <div class="card-body"  routerLink="/profile/{{cnn.iduser}}">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <img src="http://localhost:8080/linkedin/api/profile/picture/{{cnn.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+          <div class="row">
+            <b>{{cnn.name}} {{cnn.surname}} sent you a connection request</b>
+          </div>
+        </div>
+        <a class="btn btn-primary">Accept</a>
+        <a class="btn btn-secondary" style="margin-left: 10px;">Ignore</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <h5>Notifications</h5>
+  </div>
+  <hr>
+  <br>
+  <div class="col-md-3"></div>
+  <div class="card" *ngFor="let ntfc of notifications" style="margin-bottom: 15px;">
+    <div class="card-body"  routerLink="/posts/{{ntfc.idpost}}">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <img src="http://localhost:8080/linkedin/api/profile/picture/{{ntfc.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+          <b *ngIf="!ntfc.seen">{{ntfc.name}} {{ntfc.surname}} {{ntfc.action}} your post</b>
+          <p *ngIf="ntfc.seen">{{ntfc.name}} {{ntfc.surname}} {{ntfc.action}} your post</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
