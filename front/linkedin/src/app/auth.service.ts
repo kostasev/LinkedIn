@@ -13,13 +13,16 @@ export class AuthService {
   private UpdateUser = 'http://localhost:8080/linkedin/api/user/update';
   private GetSkills  = 'http://localhost:8080/linkedin/api/profile/getskills';
   private DeleteSkillUrl = 'http://localhost:8080/linkedin/api/profile/deleteskill';
-  private NewSkillUrl = 'http://localhost:8080/linkedin/api/profile/addskill';
+  private NewSkillUrl    = 'http://localhost:8080/linkedin/api/profile/addskill';
   private UpdateSkillUrl = 'http://localhost:8080/linkedin/api/profile/updateskill';
-  private ConnectedUrl = 'http://localhost:8080/linkedin/api/profile/isconnected';
-  private ConnectUrl = 'http://localhost:8080/linkedin/api/network/connect';
-  private DelConnectUrl = 'http://localhost:8080/linkedin/api/network/delconnect';
+  private ConnectedUrl   = 'http://localhost:8080/linkedin/api/profile/isconnected';
+  private ConnectUrl     = 'http://localhost:8080/linkedin/api/network/connect';
+  private DelConnectUrl  = 'http://localhost:8080/linkedin/api/network/delconnect';
   private GetConnections = 'http://localhost:8080/linkedin/api/network/connections';
-  private GetSearch = 'http://localhost:8080/linkedin/api/network/search';
+  private GetSearch      = 'http://localhost:8080/linkedin/api/network/search';
+  private CreatePost     = 'http://localhost:8080/linkedin/api/post/create';
+  private LikePost       = 'http://localhost:8080/linkedin/api/post/like';
+  private GetComms       = 'http://localhost:8080/linkedin/api/post/comments';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -125,6 +128,27 @@ export class AuthService {
 
   userSearch(user) {
     return this.http.post<any>(this.GetSearch, user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  createPost(post) {
+    return this.http.post<any>(this.CreatePost, post, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  incrLikes(post) {
+    return this.http.post<any>(this.LikePost, post, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  loadComments (token) {
+    return this.http.post<any>(this.GetComms, token, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});

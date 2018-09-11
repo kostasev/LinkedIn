@@ -17,39 +17,7 @@
   </div>
 
   <div class="col-md-4">
-    <div class="form">
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">New Post</label>
-        <textarea placeholder="What's on your mind ?" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <input
-        type="file"
-        style="display: none"
-        (change)="onFileSelect($event)"
-        #fileInput
-      >
-      <a class="btn btn-primary" routerLink="/profile/0" style="margin-right: 14px;">POST</a>
-      <a class="btn btn-primary" (click)="fileInput.click()">Upload Photo</a>
-    </div>
-    <hr/>
-    <app-posts></app-posts>
-    <!--<div class="row">
-      <div class="col-md-11"><h3>Work Experience</h3></div><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 0)">+</button>
-    </div>
-    <br>
-    <app-skill [type]="0" [is_me]="isMe" [id]="user['id']"></app-skill>
-    <br>
-    <div class="row">
-      <div class="col-md-11"><h3>Education</h3></div ><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 1)">+</button>
-    </div>
-    <br>
-    <app-skill [type]="1" [is_me]="isMe" [id]="user['id']"></app-skill>
-    <br>
-    <div class="row">
-      <div class="col-md-11"><h3>Skills</h3></div><button *ngIf="isMe" type="button" class="btn" (click)="open(content, 2)">+</button>
-    </div>
-    <br>
-    <app-skill [type]="2" [is_me]="isMe" [id]="user['id']"></app-skill>-->
+    <app-posts [name]="user.name" [surname]="user.surname"></app-posts>
   </div>
   <div class="col-md-2"></div>
 </div>

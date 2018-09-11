@@ -1,3 +1,26 @@
+<div class="form">
+  <div class="form-group">
+    <label for="textarea">New Post</label>
+    <textarea [(ngModel)]="newPost.post" placeholder="What's on your mind ?" class="form-control" id="textarea" rows="3"></textarea>
+  </div>
+  <input
+    type="file"
+    style="display: none"
+    (change)="onFileSelect($event)"
+    #fileInput
+  >
+  <a class="btn btn-primary" (click)="sendPost()" style="margin-right: 14px;">POST</a>
+  <a class="btn btn-primary" (click)="fileInput.click()">Upload Photo</a>
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="newPost.visible" style="margin-left: 150px">
+    <label  ngbButtonLabel class="btn-light active">
+      <input ngbButton type="radio" name="visible" value="public" [(ngModel)]="newPost.visible"> Public
+    </label>
+    <label ngbButtonLabel class="btn-light">
+      <input ngbButton type="radio" name="visible" value="private" [(ngModel)]="newPost.visible"> Private
+    </label>
+  </div>
+</div>
+<hr/>
 <div *ngFor="let post of posts">
   <div class="card" style="margin-top: 14px;">
     <div class="card-body">
@@ -7,12 +30,12 @@
         </div>
         <div>
           <h5 class="card-title">{{post.name}} {{post.surname}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{post.time}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{post.datetime}}</h6>
         </div>
       </div>
       <p class="card-text">{{post.post}}</p>
-      <a href="#" class="card-link">Like {{post.likes}}</a>
-      <a href="#" class="card-link" (click)="comment = true; post_id = post.idpost">Comment</a>
+      <a href="#" class="card-link" (click)="updateLikes(post)">Like {{post.likes}}</a>
+      <a href="#" class="card-link" (click)="comment = true; post_id = post.idpost; getComments(post.id)">Comment</a>
       <div *ngIf="comment && (post.idpost ==post_id )">
         <app-comments></app-comments>
       </div>

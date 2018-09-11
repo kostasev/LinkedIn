@@ -11,7 +11,6 @@ export class HomeComponent implements OnInit {
   user = {};
   imageToShow: any;
   isImageLoading: boolean;
-  selectedFile: File = null;
   constructor(private _auth: AuthService,
               private imageService: ImageService) { }
 
@@ -21,6 +20,7 @@ export class HomeComponent implements OnInit {
     this._auth.getInfoById(this.user)
       .subscribe(res => this.user = res );
     this.getImageFromService();
+
   }
 
   createImageFromBlob(image: Blob) {
@@ -47,19 +47,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onFileSelect(event) {
-    console.log(event);
-    this.selectedFile = <File>event.target.files[0];
-    const fd = new FormData();
-    fd.append('file', this.selectedFile, this.selectedFile.name);
-    fd.append('token', localStorage.getItem('token'));
-    this.imageService.onUpload(fd).subscribe(
-      res => {
-        this.getImageFromService();
-        console.log(res);
-      },
-      err => console.log(err)
-    );
-  }
+
+
+
 
 }
