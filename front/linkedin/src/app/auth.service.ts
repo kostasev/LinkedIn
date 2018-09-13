@@ -23,6 +23,8 @@ export class AuthService {
   private CreatePost     = 'http://localhost:8080/linkedin/api/post/create';
   private LikePost       = 'http://localhost:8080/linkedin/api/post/like';
   private GetComms       = 'http://localhost:8080/linkedin/api/post/comments';
+  private PostComm       = 'http://localhost:8080/linkedin/api/post/newcomment';
+  private GetPosts       = 'http://localhost:8080/linkedin/api/post/getposts';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -152,5 +154,20 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })});
+  }
+
+  createComment(post) {
+    return this.http.post<any>(this.PostComm, post, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })});
+  }
+
+  GetMyPosts(token) {
+    return this.http.post<any>(this.GetPosts, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 }

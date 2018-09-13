@@ -1,18 +1,18 @@
-<div *ngFor="let comm of comments">
+<div *ngFor="let comm of comments;">
   <hr>
   <div class="row">
     <div class="col-md-2">
-      <img src="http://localhost:8080/linkedin/api/profile/picture/{{comm.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+      <img src="http://localhost:8080/linkedin/api/profile/picture/{{comm.author}}"  onError="this.src='../../assets/user-default.png'" >
     </div>
     <div>
       <h6 class="card-title">{{comm.name}} {{comm.surname}}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">{{comm.time}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">{{comm.datetime}}</h6>
     </div>
   </div>
-  <p>{{comm.comment}}</p>
+  <p>{{comm.text}}</p>
 </div>
 <hr>
 <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Add Comment" >
-  <a class="btn btn-primary" (click)="none" >Post</a>
+  <input type="text" [(ngModel)]="newComment.post" class="form-control" placeholder="Add Comment" >
+  <a class="btn btn-primary" (click)="sendComment(idpost)" >Post</a>
 </div>

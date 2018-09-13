@@ -163,6 +163,52 @@ public class PostController {
         Authenticator auth = new Authenticator(token.getToken());
         try {
             auth.authenticate(auth.getToken());
+            System.out.println("EIMAI STA COMMENTS________ " + auth.getType() + "id post " + token.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String allComms = "SELECT name,surname,author, idpost , text, datetime, seen " +
+                "FROM comments join user WHERE idpost = ? and user.iduser = comments.author" +
+                " order by datetime DESC";
+        try {
+            pSt = con.prepareStatement(allComms);
+            pSt.setInt(1, token.getId());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Path("newcomment")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createComm (String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        Post newPost = gson.fromJson(json, Post.class);
+        Authenticator auth = new Authenticator(newPost.getToken());
+        try {
+            auth.authenticate(auth.getToken());
             System.out.println("Authenticated Token with user type " + auth.getType());
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,18 +217,59 @@ public class PostController {
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
-        String allComms = "select iduser as id, iduser , name ,surname , email  from " +
-                "(select * from connection where iduser1 = ? " +
-                " union select b.iduser2 as iduser1 , b.iduser1 as iduser2, status " +
-                " from connection b where iduser2 = ? ) as a " +
-                "inner join user where status=1 and iduser=a.iduser2 ";
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         try {
-            pSt = con.prepareStatement(allComms);
-            pSt.setInt(1, auth.getUserid());
+            String addPost = "INSERT INTO comments " +
+                    "(idpost,author,text,datetime,seen) " +
+                    "values " +
+                    "(?,?,?,?,0)";
+            pSt = con.prepareStatement(addPost);
+            pSt.setInt(1, newPost.getIduser());
             pSt.setInt(2, auth.getUserid());
+            pSt.setString(3, newPost.getPost());
+            pSt.setString(4, timeStamp);
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.ok().build();
+    }
+
+
+
+    @Path("getposts")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPosts(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("EIMAI STA Posts_______ " + auth.getType() + "id post " + token.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String allPosts = "SELECT * " +
+                "FROM post";
+        try {
+            pSt = con.prepareStatement(allPosts);
+            //pSt.setInt(1, token.getId());
             rs = pSt.executeQuery();
             if (!rs.next()) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.ok("empty skills").build();
             } else {
                 JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
                 System.out.println(jarray.get(0));

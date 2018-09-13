@@ -35,9 +35,9 @@
       </div>
       <p class="card-text">{{post.post}}</p>
       <a href="#" class="card-link" (click)="updateLikes(post)">Like {{post.likes}}</a>
-      <a href="#" class="card-link" (click)="comment = true; post_id = post.idpost; getComments(post.id)">Comment</a>
+      <a href="#" class="card-link" (click)="comment = true; post_id = post.idpost">Comment</a>
       <div *ngIf="comment && (post.idpost ==post_id )">
-        <app-comments></app-comments>
+        <app-comments [idpost]="post_id"></app-comments>
       </div>
     </div>
   </div>
