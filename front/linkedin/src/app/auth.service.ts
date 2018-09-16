@@ -25,6 +25,9 @@ export class AuthService {
   private GetComms       = 'http://localhost:8080/linkedin/api/post/comments';
   private PostComm       = 'http://localhost:8080/linkedin/api/post/newcomment';
   private GetPosts       = 'http://localhost:8080/linkedin/api/post/getposts';
+  private GetLikes       = 'http://localhost:8080/linkedin/api/post/getlikes';
+  private NewJob         = 'http://localhost:8080/linkedin/api/jobs/new';
+  private GetMyJobs      = 'http://localhost:8080/linkedin/api/jobs/myjobs';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -165,6 +168,33 @@ export class AuthService {
 
   GetMyPosts(token) {
     return this.http.post<any>(this.GetPosts, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  GetMyLikes(token) {
+    return this.http.post<any>(this.GetLikes, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  postJob(job) {
+    return this.http.post<any>(this.NewJob, job, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getMyJobs(num) {
+    const token = {};
+    token['id'] = num;
+    token['token'] = localStorage.getItem('token');
+    return this.http.post<any>(this.GetMyJobs, token, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })

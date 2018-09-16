@@ -34,7 +34,6 @@ export class CommentsComponent implements OnInit {
   private makeDateVisible( ) {
     for (const key of this.comments) {
       key['datetime'] = formatDate( key['datetime'], 'yyyy-MM-dd HH:mm:ss', 'en' );
-
     }
   }
 

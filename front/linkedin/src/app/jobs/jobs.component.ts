@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-jobs',
@@ -9,16 +10,17 @@ import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class JobsComponent implements OnInit {
   closeResult: string;
   editjb = {};
-  public jobs = [
-    {title: 'C Developer' , description: 'Young and wild and free c developer with a car and available for breakable swift' } ,
-    {title: 'C2 Developer' , description: 'Young and wild and free c developer with aasdasdsda car and available for breakable swift' } ,
-    {title: 'TCL Developer' , description: 'Young and wild and free c developer with a car assssssssndasdasdasdsdasda available for breakable swift' } ,
-    {title: 'C# Developer' , description: 'Young and wild and free c develorrper with a car anbreakable swift'} ] ;
+  newjb = {};
+  public MyJobs = [{title: 'C1 Developer' , description: 'Young and wild and free c developer with a car and available for breakable swift'}] ;
+  public NetJobs = [{title: 'C2 Developer' , description: 'Young and wild and free c developer with a car and available for breakable swift'}] ;
+  public SugJobs = [{title: 'C3 Developer' , description: 'Young and wild and free c developer with a car and available for breakable swift'}] ;
   constructor(
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private _auth: AuthService
   ) { }
 
   ngOnInit() {
+    this.newjb['visible'] = 'public';
   }
 
   open(content, type) {
@@ -38,6 +40,16 @@ export class JobsComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }
+
+  newJob() {
+    console.log(this.newjb);
+    this.newjb['token'] = localStorage.getItem('token');
+    this._auth.postJob(this.newjb)
+      .subscribe(res => {
+        console.log(res);
+        this._auth.getMyJobs(4);
+      }  );
   }
 
 }

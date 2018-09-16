@@ -9,13 +9,13 @@
 <!-- This is for my jobs-->
 <div class="row">
   <div class="col-md-2"></div>
-  <div>
+  <div class="col-md-8">
     <h5>My Jobs</h5>
     <hr>
     <div class="container">
     <div class="row">
-      <div *ngFor="let jb of jobs" class="col-md-3">
-        <div class="card mb-4 shadow-sm">
+      <div *ngFor="let jb of MyJobs" class="col-md-3">
+        <div class="card mb-4 shadow-sm" >
           <img class="card-img-top" data-holder-rendered="true">
           <div class="card-title">
             <h6 align="center" style="border-top-width: 25px; margin-top: 25px;">{{jb.title}}</h6>
@@ -40,12 +40,12 @@
 <!-- This is for Network jobs -->
 <div class="row">
   <div class="col-md-2"></div>
-  <div>
+  <div  class="col-md-8">
     <h5>My Network</h5>
     <hr>
     <div class="container">
       <div class="row">
-        <div *ngFor="let jb of jobs" class="col-md-3">
+        <div *ngFor="let jb of NetJobs" class="col-md-3">
           <div class="card mb-4 shadow-sm">
             <img class="card-img-top" data-holder-rendered="true">
             <div class="card-title">
@@ -70,12 +70,12 @@
 <!-- This is for NN jobs-->
 <div class="row">
   <div class="col-md-2"></div>
-  <div>
+  <div  class="col-md-8">
     <h5>Suggested Jobs</h5>
     <hr>
     <div class="container">
       <div class="row">
-        <div *ngFor="let jb of jobs" class="col-md-3">
+        <div *ngFor="let jb of SugJobs" class="col-md-3">
           <div class="card mb-4 shadow-sm">
             <img class="card-img-top" data-holder-rendered="true">
             <div class="card-title">
@@ -108,13 +108,21 @@
   </div>
   <div class="modal-body">
     <form>
-      Title<input [(ngModel)]="editjb.title" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
-      Description<input [(ngModel)]="editjb.description" id="description" class="form-control" placeholder="Description" name="dp"><br>
-      Skills<input [(ngModel)]="editjb.skills" type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
+      Title<input [(ngModel)]="newjb.title" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
+      Description<textarea type="text" [(ngModel)]="newjb.descr" id="description" class="form-control" placeholder="Description" name="dp"></textarea><br>
+      Skills<textarea [(ngModel)]="newjb.skills" type="text" class="form-control" name="skills" id="skills" rows="3" placeholder="Comma Seperated Skills"></textarea><br>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark">Save</button>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="newjb.visible" style="margin-left: 150px">
+      <label  ngbButtonLabel class="btn-light active">
+        <input ngbButton type="radio" name="visible" value="public" [(ngModel)]="newjb.visible"> Public
+      </label>
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" name="visible" value="private" [(ngModel)]="newjb.visible"> Private
+      </label>
+    </div>
+    <button type="button" class="btn btn-outline-dark" (click)="newJob(); d('save')">Post Job</button>
   </div>
 </ng-template>
 

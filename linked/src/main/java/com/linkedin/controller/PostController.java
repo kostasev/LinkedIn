@@ -2,22 +2,21 @@ package com.linkedin.controller;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.linkedin.db.DBConnector;
 import com.linkedin.pojos.MyToken;
 import com.linkedin.pojos.Post;
 import com.linkedin.security.Authenticator;
 import com.linkedin.utilities.ResultSetToJsonMapper;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONArray;
 
 import javax.json.Json;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.json.JsonObject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -262,11 +261,49 @@ public class PostController {
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
-        String allPosts = "SELECT * " +
-                "FROM post";
+        String allPosts = "(select user.name , user.surname, post.idpost , user.iduser , post.datetime ,post.post " +
+                "from " +
+                "user, " +
+                "post, " +
+                "(select iduser as id , name , surname , email " +
+                "from " +
+                "(select * from connection " +
+                "where iduser1 = ? " +
+                "union " +
+                "select b.iduser2 as iduser1 , b.iduser1 as iduser2, status " +
+                "from connection b " +
+                "where iduser2 = ?) as a " +
+                "inner join " +
+                "        user " +
+                "where status=1 and iduser=a.iduser2 ) as usr, " +
+                "(select idpost,iduser " +
+                "from likes ) as lk " +
+                "where usr.id=lk.iduser and post.author=user.iduser and post.idpost=lk.idpost and user.iduser <> ?) " +
+                "union distinct" +
+                "(select user.name , user.surname, post.idpost , user.iduser , post.datetime ,post.post " +
+                "from " +
+                "user, " +
+                "post, " +
+                "(select iduser as id , name , surname , email " +
+                "from" +
+                "(select * from connection " +
+                "where iduser1 = ? " +
+                "union " +
+                "select b.iduser2 as iduser1 , b.iduser1 as iduser2, status " +
+                "from connection b " +
+                "where iduser2 = ?) as a " +
+                "inner join " +
+                "        user " +
+                "where status=1 and iduser=a.iduser2 or iduser=?) as usr " +
+                "where post.author=usr.id and user.iduser=post.author) order by datetime desc ";
         try {
             pSt = con.prepareStatement(allPosts);
-            //pSt.setInt(1, token.getId());
+            pSt.setInt(1, auth.getUserid());
+            pSt.setInt(2, auth.getUserid());
+            pSt.setInt(3, auth.getUserid());
+            pSt.setInt(4, auth.getUserid());
+            pSt.setInt(5, auth.getUserid());
+            pSt.setInt(6, auth.getUserid());
             rs = pSt.executeQuery();
             if (!rs.next()) {
                 return Response.ok("empty skills").build();
@@ -286,5 +323,121 @@ public class PostController {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    @Path("getlikes")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getLikes(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("EIMAI STA Posts_______ " + auth.getType() + "id post " + token.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String allPosts =
+                "select count(iduser) as likes, idpost " +
+                "from likes where idpost=? group by idpost;";
+        try {
+            pSt = con.prepareStatement(allPosts);
+            pSt.setInt(1, token.getId());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            } else {
+                JsonObject tokenJson = Json.createObjectBuilder()
+                        .add("likes",rs.getInt(1))
+                        .add("idpost",rs.getInt(2))
+                        .build();
+                return Response.ok(tokenJson).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("picture/{id}")
+    @GET
+    public Response getFullImage(@PathParam("id") String id) throws IOException {
+
+
+        String filePath = "C:/Users/Public/PostPictures/" + id + ".jpg";
+
+        System.out.println("I got a requeeest_______" + filePath);
+
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("I got a  NOT FOUND requeeest_______" + filePath);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        Response.ResponseBuilder response = Response.ok((Object) file).header("content-type", "image/jpg");
+
+        return response.build();
+    }
+
+    @Path("upload")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadFile(@FormDataParam("file") InputStream fileInputStream,
+                               @FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+                               @FormDataParam("token") String token) {
+        Authenticator auth = new Authenticator(token);
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        String filePath = "C:/Users/Public/PostPictures/" + auth.getUserid() + ".jpg";
+
+        // save the file to the server
+        saveFile(fileInputStream, filePath);
+
+        String output = "File saved to server location : " + filePath;
+
+        return Response.status(200).build();
+
+    }
+
+    // save uploaded file to a defined location on the server
+    private void saveFile(InputStream uploadedInputStream,
+                          String serverLocation) {
+
+        try {
+            File file = new File(serverLocation);
+            file.delete();
+            OutputStream outpuStream = new FileOutputStream(new File(serverLocation), false);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                outpuStream.write(bytes, 0, read);
+            }
+            outpuStream.flush();
+            outpuStream.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
     }
 }
