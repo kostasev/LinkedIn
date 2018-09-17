@@ -3,8 +3,11 @@ package com.linkedin.controller;
 import com.google.gson.Gson;
 import com.linkedin.db.DBConnector;
 import com.linkedin.pojos.Job;
+import com.linkedin.pojos.MyToken;
 import com.linkedin.pojos.Post;
 import com.linkedin.security.Authenticator;
+import com.linkedin.utilities.ResultSetToJsonMapper;
+import org.json.JSONArray;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -137,5 +140,177 @@ public class JobController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Path("myjobs")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getMyJobs(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = null;
+        if (token.getId()==4) {
+            myPosts = "select * from job where idauthor = ? limit 4 ";
+        } else {
+            myPosts = "select  * from job where idauthor = ? ";
+        }
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setInt(1, auth.getUserid());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Path("skills")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getSkills(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = "select  * from desired_skill where job_idjobs=?";
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setInt(1, token.getId());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Path("applicants")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAplls(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = "select  idjob,user.iduser,name,surname " +
+                "from candidate, user " +
+                "where idjob=? and user.iduser=candidate.iduser;";
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setInt(1, token.getId());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("delete")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delJob(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        try {
+            String delSkill = "DELETE  FROM job " +
+                    "WHERE idjobs = ? AND idauthor = ?";
+            pSt = con.prepareStatement(delSkill);
+            pSt.setInt(1, token.getId());
+            pSt.setInt(2, auth.getUserid());
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.ok().build();
     }
 }

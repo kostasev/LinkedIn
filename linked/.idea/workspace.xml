@@ -2,23 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6ff3187-041d-4c3f-a478-aa46104df350" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Job.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/comments/comments.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/comments/comments.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/jobs/jobs.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/posts/posts.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c1044a1e-db8f-4795-a2de-42c69baf0ddb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c1044a1e-db8f-4795-a2de-42c69baf0ddb.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/HelloWorld.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/linkedin/controller/HelloWorld.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/linkedin/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/linkedin/controller/PostController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/HelloWorld.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/PostController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/PostController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/linkedin/controller/JobController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/linkedin/controller/JobController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/JobController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/JobController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,20 +44,6 @@
         <item name="linkedin@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="linkedin: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="linkedin@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="linkedin: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="desired_skill: table" type="98d5ac3d:MysqlImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="linkedin@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="linkedin: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="job: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -161,28 +138,29 @@
     <session id="-613626146">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="22" />
+          <entry key="project.closed" value="23" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="5" />
           <entry key="project.open.time.11" value="2" />
-          <entry key="project.open.time.2" value="6" />
+          <entry key="project.open.time.2" value="7" />
           <entry key="project.open.time.3" value="4" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.opened" value="24" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="MF" value="1" />
+          <entry key="candidate" value="2" />
           <entry key="chat" value="1" />
           <entry key="class" value="1" />
           <entry key="comments" value="2" />
-          <entry key="connection" value="6" />
-          <entry key="desired_skill" value="1" />
-          <entry key="java" value="36" />
-          <entry key="job" value="1" />
+          <entry key="connection" value="7" />
+          <entry key="desired_skill" value="2" />
+          <entry key="java" value="37" />
+          <entry key="job" value="3" />
           <entry key="like" value="2" />
           <entry key="likes" value="5" />
           <entry key="post" value="8" />
@@ -195,8 +173,8 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="Database Element" value="40" />
-          <entry key="JAVA" value="36" />
+          <entry key="Database Element" value="46" />
+          <entry key="JAVA" value="37" />
           <entry key="Manifest" value="1" />
           <entry key="Scratch" value="1" />
           <entry key="XML" value="1" />
@@ -204,18 +182,18 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cell" value="292" />
-          <entry key="java" value="7411" />
+          <entry key="cell" value="299" />
+          <entry key="java" value="7812" />
           <entry key="txt" value="8" />
           <entry key="xml" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7401" />
+          <entry key="JAVA" value="7798" />
           <entry key="PLAIN_TEXT" value="8" />
-          <entry key="SQL" value="10" />
-          <entry key="Scratch" value="292" />
+          <entry key="SQL" value="14" />
+          <entry key="Scratch" value="299" />
           <entry key="XML" value="47" />
         </counts>
       </usages-collector>
@@ -225,69 +203,16 @@
     <favorites_list name="linked" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.44837546">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="437">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="73">
-                  <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
+                <state relative-caret-position="690">
+                  <caret line="312" column="9" lean-forward="true" selection-start-line="312" selection-start-column="9" selection-end-line="312" selection-end-column="9" />
                   <folding>
                     <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/job">
-              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-                <state>
-                  <filtering enabled="true" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/desired_skill">
-              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-                <state>
-                  <filtering enabled="true" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Job.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="335">
-                  <caret line="51" column="22" lean-forward="true" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#232#233#0" expanded="true" />
-                    <element signature="e#262#263#0" expanded="true" />
-                    <element signature="e#308#309#0" expanded="true" />
-                    <element signature="e#346#347#0" expanded="true" />
-                    <element signature="e#202#203#0" expanded="true" />
-                    <element signature="e#230#231#0" expanded="true" />
-                    <element signature="e#272#273#0" expanded="true" />
-                    <element signature="e#306#307#0" expanded="true" />
-                    <element signature="e#176#177#0" expanded="true" />
-                    <element signature="e#204#205#0" expanded="true" />
-                    <element signature="e#246#247#0" expanded="true" />
-                    <element signature="e#280#281#0" expanded="true" />
-                    <element signature="e#306#307#0" expanded="true" />
-                    <element signature="e#331#332#0" expanded="true" />
-                    <element signature="e#364#365#0" expanded="true" />
-                    <element signature="e#392#393#0" expanded="true" />
-                    <element signature="e#423#424#0" expanded="true" />
-                    <element signature="e#450#451#0" expanded="true" />
-                    <element signature="e#490#491#0" expanded="true" />
-                    <element signature="e#522#523#0" expanded="true" />
-                    <element signature="e#555#556#0" expanded="true" />
-                    <element signature="e#584#585#0" expanded="true" />
-                    <element signature="e#628#629#0" expanded="true" />
-                    <element signature="e#664#665#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -296,12 +221,24 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="192">
-                  <caret line="133" column="41" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
+                <state relative-caret-position="107">
+                  <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/ProfileController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="119">
+                  <caret line="216" column="4" selection-start-line="216" selection-start-column="4" selection-end-line="253" selection-end-column="5" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -341,6 +278,8 @@
       <find>pro</find>
       <find>getpostid</find>
       <find>desc</find>
+      <find>getposts</find>
+      <find>delete</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -426,6 +365,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -532,15 +473,13 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537135080903" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537219233068" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -769,11 +708,12 @@
       <workItem from="1536999489402" duration="3942000" />
       <workItem from="1537017673235" duration="2902000" />
       <workItem from="1537089046375" duration="20515000" />
+      <workItem from="1537200511891" duration="10098000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="314260000" />
+    <option name="totallyTimeSpent" value="324358000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -795,7 +735,7 @@
       <window_info id="Capture Tool" order="4" />
       <window_info id="Web" order="5" sideWeight="0.50151515" side_tool="true" weight="0.25746268" />
       <window_info id="Structure" order="6" sideWeight="0.50151515" side_tool="true" weight="0.25746268" />
-      <window_info content_ui="combo" id="Project" order="7" sideWeight="0.49838188" visible="true" weight="0.12686567" />
+      <window_info content_ui="combo" id="Project" order="7" sideWeight="0.49838188" visible="true" weight="0.12793177" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914712" weight="0.3449024" />
@@ -819,7 +759,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="JSF" order="5" weight="0.32995737" />
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.17377399" />
-      <window_info active="true" anchor="right" id="Database" order="7" visible="true" weight="0.1337953" />
+      <window_info anchor="right" id="Database" order="7" visible="true" weight="0.1337953" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="CDI" order="10" />
@@ -1039,13 +979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/connection">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/post">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1071,27 +1004,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/HelloWorld.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="40" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/HelloWorld.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/NetworkController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
           <caret line="234" column="9" selection-start-line="234" selection-start-column="9" selection-end-line="234" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/ProfileController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1136,56 +1053,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="133" column="41" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Job.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="51" column="22" lean-forward="true" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+        <state relative-caret-position="386">
+          <caret line="51" column="22" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
           <folding>
-            <element signature="e#232#233#0" expanded="true" />
-            <element signature="e#262#263#0" expanded="true" />
-            <element signature="e#308#309#0" expanded="true" />
-            <element signature="e#346#347#0" expanded="true" />
-            <element signature="e#202#203#0" expanded="true" />
-            <element signature="e#230#231#0" expanded="true" />
-            <element signature="e#272#273#0" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#176#177#0" expanded="true" />
-            <element signature="e#204#205#0" expanded="true" />
-            <element signature="e#246#247#0" expanded="true" />
-            <element signature="e#280#281#0" expanded="true" />
-            <element signature="e#306#307#0" expanded="true" />
-            <element signature="e#331#332#0" expanded="true" />
-            <element signature="e#364#365#0" expanded="true" />
-            <element signature="e#392#393#0" expanded="true" />
-            <element signature="e#423#424#0" expanded="true" />
-            <element signature="e#450#451#0" expanded="true" />
-            <element signature="e#490#491#0" expanded="true" />
-            <element signature="e#522#523#0" expanded="true" />
-            <element signature="e#555#556#0" expanded="true" />
-            <element signature="e#584#585#0" expanded="true" />
-            <element signature="e#628#629#0" expanded="true" />
-            <element signature="e#664#665#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/ProfileController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
+        <state relative-caret-position="119">
+          <caret line="216" column="4" selection-start-line="216" selection-start-column="4" selection-end-line="253" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/connection">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -1200,6 +1098,23 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/candidate">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="312" column="9" lean-forward="true" selection-start-line="312" selection-start-column="9" selection-end-line="312" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -28,6 +28,9 @@ export class AuthService {
   private GetLikes       = 'http://localhost:8080/linkedin/api/post/getlikes';
   private NewJob         = 'http://localhost:8080/linkedin/api/jobs/new';
   private GetMyJobs      = 'http://localhost:8080/linkedin/api/jobs/myjobs';
+  private GetDescSkills  = 'http://localhost:8080/linkedin/api/jobs/skills';
+  private GetJobAppl     = 'http://localhost:8080/linkedin/api/jobs/applicants';
+  private DelJob         = 'http://localhost:8080/linkedin/api/jobs/delete';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -195,6 +198,36 @@ export class AuthService {
     token['id'] = num;
     token['token'] = localStorage.getItem('token');
     return this.http.post<any>(this.GetMyJobs, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getskills(num) {
+    const token = {};
+    token['id'] = num;
+    token['token'] = localStorage.getItem('token');
+    return this.http.post<any>(this.GetDescSkills, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getApplicants(num) {
+    const token = {};
+    token['id'] = num;
+    token['token'] = localStorage.getItem('token');
+    return this.http.post<any>(this.GetJobAppl, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getDeleteJob(token) {
+    return this.http.post<any>(this.DelJob, token, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })

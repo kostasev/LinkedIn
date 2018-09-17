@@ -18,15 +18,17 @@
         <div class="card mb-4 shadow-sm" >
           <img class="card-img-top" data-holder-rendered="true">
           <div class="card-title">
+            <button type="button" class="close" aria-label="Close" (click)="deleteJob(jb.idjobs)">
+              <span aria-hidden="true">&times;</span>
+            </button>
             <h6 align="center" style="border-top-width: 25px; margin-top: 25px;">{{jb.title}}</h6>
           </div>
           <div class="card-body">
-            <p class="card-text">{{jb.description}}</p>
+            <p class="card-text">{{jb.descr}}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Edit</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Applicants</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2); getSkills(jb)">View</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content3, 2); getAppl(jb)">Applicants</button>
               </div>
             </div>
           </div>
@@ -55,8 +57,8 @@
               <p class="card-text">{{jb.description}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Apply</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2); getSkills(jb)">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyToJob()">Apply</button>
                 </div>
               </div>
             </div>
@@ -85,8 +87,8 @@
               <p class="card-text">{{jb.description}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2)">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content, 2)">Apply</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="open(content2, 2); getSkills(jb)">View</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyToJob()">Apply</button>
                 </div>
               </div>
             </div>
@@ -128,19 +130,43 @@
 
 <ng-template #content2 let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Edit Job</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{_job.title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <form>
-      Title<input [(ngModel)]="editjb.title" id="skill" class="form-control" placeholder="Skill" name="dp" ><br>
-      Description<input [(ngModel)]="editjb.description" id="description" class="form-control" placeholder="Description" name="dp"><br>
-      Skills<input [(ngModel)]="editjb.skills" type="date" class="form-control" name="datetime_start" id="datetime_start"><br>
-    </form>
+    <p>{{_job.descr}}</p>
+    <hr>
+    <ul>
+    <div *ngFor="let skl of skills">
+      <li>{{skl.name}}</li>
+    </div>
+    </ul>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark">Save</button>
+</ng-template>
+
+
+<ng-template #content3 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Applicants</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card" *ngFor="let appl of applicants" style="margin-bottom: 15px;">
+      <div class="card-body"  routerLink="/profile/{{appl.iduser}}" (click)="d('clk')">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <img id="prf" src="http://localhost:8080/linkedin/api/profile/picture/{{appl.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+          <div class="col-md-1"></div>
+          <div class="col-md-6">
+            <b>{{appl.name}} {{appl.surname}} </b>
+            <p>{{appl.email}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
