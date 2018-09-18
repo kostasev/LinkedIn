@@ -15,10 +15,7 @@ export class JobsComponent implements OnInit {
   skills = [];
   _job = {};
   applicants = [];
-  public MyJobs = [{
-    title: 'C1 Developer',
-    description: 'Young and wild and free c developer with a car and available for breakable swift'
-  }];
+  public MyJobs = [];
   public NetJobs = [{
     title: 'C2 Developer',
     description: 'Young and wild and free c developer with a car and available for breakable swift'
@@ -64,7 +61,7 @@ export class JobsComponent implements OnInit {
     this._auth.postJob(this.newjb)
       .subscribe(res => {
         console.log(res);
-        this._auth.getMyJobs(4);
+        this.getMyJob(4);
       });
   }
 
@@ -94,13 +91,15 @@ export class JobsComponent implements OnInit {
       });
   }
 
-  deleteJob(num){
+  deleteJob(jb) {
     const token = {};
-    token['id'] = num;
+    token['id'] = jb.idjobs;
     token['token'] = localStorage.getItem('token');
+    console.log(token);
     this._auth.getDeleteJob(token)
       .subscribe(res => {
         console.log(res);
+        this.MyJobs.splice(this.MyJobs.indexOf(jb));
       },
         err => console.log(err));
   }

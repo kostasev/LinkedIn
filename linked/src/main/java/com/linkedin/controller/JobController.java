@@ -85,7 +85,7 @@ public class JobController {
             Connection con = DBConnector.getInstance().getConnection();
             try {
                 String addSkill = "INSERT INTO desired_skill " +
-                        "(name,job_idjobs) " +
+                        "(name,djobs) " +
                         "values " +
                         "(?,?)";
                 pSt = con.prepareStatement(addSkill);
@@ -207,7 +207,7 @@ public class JobController {
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
-        String myPosts = "select  * from desired_skill where job_idjobs=?";
+        String myPosts = "select  * from desired_skill where djobs=?";
         try {
             pSt = con.prepareStatement(myPosts);
             pSt.setInt(1, token.getId());
@@ -292,6 +292,8 @@ public class JobController {
             e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+        delskll(token.getId());
+        delcand(token.getId());
         PreparedStatement pSt = null;
         Connection con = DBConnector.getInstance().getConnection();
         try {
@@ -312,5 +314,49 @@ public class JobController {
             }
         }
         return Response.ok().build();
+    }
+
+    public boolean delskll(int idjob) throws IOException, SQLException {
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        try {
+            String delSkill = "DELETE  FROM desired_skill " +
+                    "WHERE djobs=?";
+            pSt = con.prepareStatement(delSkill);
+            pSt.setInt(1, idjob);
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public boolean delcand(int idjob) throws IOException, SQLException {
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        try {
+            String delSkill = "DELETE  FROM candidate " +
+                    "WHERE idjob=?";
+            pSt = con.prepareStatement(delSkill);
+            pSt.setInt(1, idjob);
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 }
