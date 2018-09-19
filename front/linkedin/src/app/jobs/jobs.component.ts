@@ -16,24 +16,19 @@ export class JobsComponent implements OnInit {
   _job = {};
   applicants = [];
   public MyJobs = [];
-  public NetJobs = [{
-    title: 'C2 Developer',
-    description: 'Young and wild and free c developer with a car and available for breakable swift'
-  }];
-  public SugJobs = [{
-    title: 'C3 Developer',
-    description: 'Young and wild and free c developer with a car and available for breakable swift'
-  }];
+  public NetJobs = [];
+  public SugJobs = [];
 
   constructor(
     private modalService: NgbModal,
-    private _auth: AuthService
-  ) {
+    private _auth: AuthService) {
   }
 
   ngOnInit() {
     this.newjb['visible'] = 'public';
     this.getMyJob(4);
+    this.getNetJob(4);
+    this.getSugJob(4);
   }
 
   open(content, type) {
@@ -73,6 +68,22 @@ export class JobsComponent implements OnInit {
       });
   }
 
+  private getNetJob(number: number) {
+    this._auth.getNetJobs(number)
+      .subscribe(res => {
+        console.log(res);
+        this.NetJobs = res;
+      });
+  }
+
+  private getSugJob(number: number) {
+    this._auth.getSugJobs(number)
+      .subscribe(res => {
+        console.log(res);
+        this.SugJobs = res;
+      });
+  }
+
   getSkills(job) {
     this._job = job;
     this._auth.getskills(job.idjobs)
@@ -101,6 +112,17 @@ export class JobsComponent implements OnInit {
         console.log(res);
         this.MyJobs.splice(this.MyJobs.indexOf(jb));
       },
+        err => console.log(err));
+  }
+
+  applyToJob(jb) {
+    const token = {};
+    token['id'] = jb.idjobs;
+    token['token'] = localStorage.getItem('token');
+    this._auth.doApply(token)
+      .subscribe(res => {
+          console.log(res);
+        },
         err => console.log(err));
   }
 }

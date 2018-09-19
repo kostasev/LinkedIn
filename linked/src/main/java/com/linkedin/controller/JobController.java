@@ -160,11 +160,7 @@ public class JobController {
         Connection con = DBConnector.getInstance().getConnection();
         ResultSet rs = null;
         String myPosts = null;
-        if (token.getId()==4) {
-            myPosts = "select * from job where idauthor = ? limit 4 ";
-        } else {
-            myPosts = "select  * from job where idauthor = ? ";
-        }
+        myPosts = "select  * from job where idauthor = ? ";
         try {
             pSt = con.prepareStatement(myPosts);
             pSt.setInt(1, auth.getUserid());
@@ -358,5 +354,148 @@ public class JobController {
             }
         }
         return true;
+    }
+
+
+    @Path("mynetwork")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getMyNetJobs(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = null;
+        myPosts ="select idjobs,visible,state,descr,title,idauthor " +
+                "from " +
+                "(select * from connection " +
+                "where iduser1 = ? " +
+                "union " +
+                "select b.iduser2 as iduser1 , b.iduser1 as iduser2, status " +
+                "from connection b " +
+                "where iduser2 = ?) as a, " +
+                "job " +
+                "where iduser2=job.idauthor ";
+
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setInt(1, auth.getUserid());
+            pSt.setInt(2, auth.getUserid());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Path("apply")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response applyJob(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        try {
+            String addPost = "INSERT INTO candidate " +
+                    "(idjob, iduser) " +
+                    "values " +
+                    "(?,?)";
+            pSt = con.prepareStatement(addPost);
+            pSt.setInt(1, token.getId());
+            pSt.setInt(2, auth.getUserid());
+            pSt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.ok().build();
+    }
+
+    @Path("suggestions")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getSugJobs(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = null;
+        myPosts ="select idjobs,j.visible,state,descr,title,idauthor, count(skill) as matches " +
+                "from " +
+                "job as j, " +
+                "desired_skill as ds, " +
+                "skills as sk " +
+                "where j.visible = 'public' and ds.name=sk.skill and j.idjobs=ds.djobs and sk.iduser=? group by idjobs order by matches ";
+
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setInt(1, auth.getUserid());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("empty skills").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                System.out.println(jarray.get(0));
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
