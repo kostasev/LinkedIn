@@ -7,18 +7,18 @@
   <br>
   <div class="col-md-3"></div>
   <div class="card" *ngFor="let cnn of connections" style="margin-bottom: 15px;">
-    <div class="card-body"  routerLink="/profile/{{cnn.iduser}}">
+    <div class="card-body">
       <div class="row">
         <div class="col-md-1"></div>
-        <img src="http://localhost:8080/linkedin/api/profile/picture/{{cnn.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+        <img routerLink="/profile/{{cnn.iduser1}}" src="http://localhost:8080/linkedin/api/profile/picture/{{cnn.iduser1}}"  onError="this.src='../../assets/user-default.png'" >
         <div class="col-md-1"></div>
         <div class="col-md-7">
           <div class="row">
             <b>{{cnn.name}} {{cnn.surname}} sent you a connection request</b>
           </div>
         </div>
-        <a class="btn btn-primary">Accept</a>
-        <a class="btn btn-secondary" style="margin-left: 10px;">Ignore</a>
+        <a class="btn btn-primary" (click)="acceptRequest(cnn)">Accept</a>
+        <a class="btn btn-secondary" style="margin-left: 10px;" (click)="delRequest(cnn)">Ignore</a>
       </div>
     </div>
   </div>
@@ -33,13 +33,15 @@
   <br>
   <div class="col-md-3"></div>
   <div class="card" *ngFor="let ntfc of notifications" style="margin-bottom: 15px;">
-    <div class="card-body"  routerLink="/posts/{{ntfc.idpost}}">
+    <div class="card-body"  routerLink="/profile/{{ntfc.iduser}}">
       <div class="row">
         <div class="col-md-1"></div>
         <img src="http://localhost:8080/linkedin/api/profile/picture/{{ntfc.iduser}}"  onError="this.src='../../assets/user-default.png'" >
         <div class="col-md-1"></div>
-        <div class="col-md-6">
-          <b *ngIf="!ntfc.seen">{{ntfc.name}} {{ntfc.surname}} {{ntfc.action}} your post</b>
+        <div class="col-md-6" *ngIf="!ntfc.seen">
+          <b *ngIf="!ntfc.seen">{{ntfc.name}} {{ntfc.surname}} {{ntfc.type}} your post</b>
+        </div>
+        <div class="col-md-6" *ngIf="ntfc.seen">
           <p *ngIf="ntfc.seen">{{ntfc.name}} {{ntfc.surname}} {{ntfc.action}} your post</p>
         </div>
       </div>

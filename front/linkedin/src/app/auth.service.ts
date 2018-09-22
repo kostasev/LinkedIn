@@ -34,6 +34,11 @@ export class AuthService {
   private GetNetJobs     = 'http://localhost:8080/linkedin/api/jobs/mynetwork';
   private ApplyJob       = 'http://localhost:8080/linkedin/api/jobs/apply';
   private GetSugJobs     = 'http://localhost:8080/linkedin/api/jobs/suggestions';
+  private AccRequest     = 'http://localhost:8080/linkedin/api/notification/accept';
+  private DelRequest     = 'http://localhost:8080/linkedin/api/notification/delete';
+  private GetRequests    = 'http://localhost:8080/linkedin/api/notification/getall';
+  private GetNotifs      = 'http://localhost:8080/linkedin/api/notification/getnotifs';
+  private SetSeen        = 'http://localhost:8080/linkedin/api/notification/seen';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -261,6 +266,46 @@ export class AuthService {
 
   doApply(token) {
     return this.http.post<any>(this.ApplyJob, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  accRequest(token) {
+    return this.http.post<any>(this.AccRequest, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  deleteRequest(token) {
+    return this.http.post<any>(this.DelRequest, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getRequests(token) {
+    return this.http.post<any>(this.GetRequests, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getNotifs(token) {
+    return this.http.post<any>(this.GetNotifs, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  setSeen(token) {
+    return this.http.post<any>(this.SetSeen, token, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
