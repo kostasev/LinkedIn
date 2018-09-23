@@ -9,26 +9,28 @@
   <div class="col-md-1"></div>
   <div class="col-md-3" id="scroll">
     <div class="card" *ngFor="let user of msgUsers" style="margin-bottom: 11px;">
-      <div class="card-body"  routerLink="/profile/{{user.id}}">
+      <div class="card-body"  (click)="getChatById(user.iduser)">
         <div class="row">
           <div class="col-md-1"></div>
-          <img src="http://localhost:8080/linkedin/api/profile/picture/{{user.id}}"  onError="this.src='../../assets/user-default.png'" >
+          <img src="http://localhost:8080/linkedin/api/profile/picture/{{user.iduser}}"  onError="this.src='../../assets/user-default.png'" >
           <div class="col-md-1"></div>
           <div class="col-md-8">
-            <b>{{user.name}} {{user.surname}}</b>
+            <b>{{user.name}} {{user.surname}}</b> <br>
+            <p>{{user.datetime}}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col-md-8">
+    <h6>{{chatname}}</h6>
     <div class="container">
       <div class="row" id="window_msg">
         <div class="container">
         <div class="row" *ngFor="let msg of messages">
         <div class="col-md-5">
           <div class="card" style="background-color: #1fa4ff7d;
-              margin-top: 10px;" *ngIf="myId != msg.id">
+              margin-top: 10px;" *ngIf="myId != msg.iduser">
             <div class="card-body">
               {{msg.text}}
             </div>
@@ -36,7 +38,7 @@
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-5">
-          <div class="card" style="margin-top: 10px;" *ngIf="myId == msg.id">
+          <div class="card" style="margin-top: 10px;" *ngIf="myId == msg.iduser">
             <div class="card-body">
               {{msg.text}}
             </div>
@@ -49,10 +51,10 @@
         <form>
           <div class="row">
             <div class="col-md-8">
-              <input type="text" class="form-control" placeholder="Message">
+              <input [(ngModel)]="newmessage" type="text" class="form-control" placeholder="Message" name="message">
             </div>
             <div class="col">
-              <a class="btn btn-primary" >Send Message</a>
+              <a class="btn btn-primary" (click)="sendMessage(chatid)">Send Message</a>
             </div>
           </div>
         </form>

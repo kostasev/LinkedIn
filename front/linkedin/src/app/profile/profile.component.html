@@ -10,7 +10,7 @@
       <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
       <p>{{user.email}}</p>
       <input type="hidden" value="{{user.id}}">
-      <a *ngIf="!isMe" class="btn btn-primary" routerLink="/message/{{user.id}}">Send Message</a>
+      <a *ngIf="!isMe" class="btn btn-primary" routerLink="/messages/{{par}}">Send Message</a>
       <input
         type="file"
         style="display: none"

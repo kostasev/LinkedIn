@@ -39,6 +39,10 @@ export class AuthService {
   private GetRequests    = 'http://localhost:8080/linkedin/api/notification/getall';
   private GetNotifs      = 'http://localhost:8080/linkedin/api/notification/getnotifs';
   private SetSeen        = 'http://localhost:8080/linkedin/api/notification/seen';
+  private GetChats       = 'http://localhost:8080/linkedin/api/messages/getchats';
+  private GetChat        = 'http://localhost:8080/linkedin/api/messages/getchat';
+  private GetChatId      = 'http://localhost:8080/linkedin/api/messages/getchatid';
+  private SendMessage    = 'http://localhost:8080/linkedin/api/messages/postmessage';
   constructor(private http: HttpClient) { }
 
   loginUser(user) {
@@ -306,6 +310,39 @@ export class AuthService {
 
   setSeen(token) {
     return this.http.post<any>(this.SetSeen, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getChats(token) {
+    return this.http.post<any>(this.GetChats, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  getChat(token) {
+    return this.http.post<any>(this.GetChat, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+
+  getChatId(token) {
+    return this.http.post<any>(this.GetChatId, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  sendMsg(token) {
+    return this.http.post<any>(this.SendMessage, token, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })

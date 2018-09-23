@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   conMessage = '+ Add Connection';
   delMessage = 'Delete Connection';
   usr = {};
+  par;
   constructor(private _auth: AuthService,
               private imageService: ImageService,
               private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.user['id'] = params['id'];
+      this.par = params['id'];
     });
     this.user['token'] = localStorage.getItem('token');
     this._auth.getInfoById(this.user)

@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6ff3187-041d-4c3f-a478-aa46104df350" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/NotifyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/app-routing.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/notifications/notifications.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/notifications/notifications.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/notifications/notifications.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/notifications/notifications.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/messages/messages.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/messages/messages.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/messages/messages.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/messages/messages.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/navbar/navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/navbar/navbar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/profile/profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/linkedin/src/app/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/websocket.service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/linkedin/src/app/websocket.service.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/linkedin/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/linkedin/controller/MessageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/linkedin/WEB-INF/classes/com/linkedin/controller/MessageController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,13 +50,6 @@
         <item name="linkedin@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="linkedin: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="linkedin@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="linkedin: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="post: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -152,36 +153,36 @@
           <entry key="project.open.time.3" value="4" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="30" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="31" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="MF" value="1" />
-          <entry key="candidate" value="3" />
+          <entry key="candidate" value="4" />
           <entry key="chat" value="2" />
           <entry key="class" value="1" />
           <entry key="comments" value="4" />
           <entry key="connection" value="11" />
           <entry key="desired_skill" value="9" />
-          <entry key="java" value="43" />
-          <entry key="job" value="10" />
+          <entry key="java" value="49" />
+          <entry key="job" value="11" />
           <entry key="like" value="2" />
           <entry key="likes" value="7" />
           <entry key="post" value="10" />
           <entry key="skills" value="11" />
           <entry key="sql" value="1" />
           <entry key="user" value="8" />
-          <entry key="user_has_chat" value="1" />
+          <entry key="user_has_chat" value="2" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="Database Element" value="78" />
-          <entry key="JAVA" value="43" />
+          <entry key="Database Element" value="81" />
+          <entry key="JAVA" value="49" />
           <entry key="Manifest" value="1" />
           <entry key="Scratch" value="1" />
           <entry key="XML" value="1" />
@@ -189,18 +190,18 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cell" value="344" />
-          <entry key="java" value="9026" />
+          <entry key="cell" value="367" />
+          <entry key="java" value="9755" />
           <entry key="txt" value="8" />
           <entry key="xml" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="9008" />
+          <entry key="JAVA" value="9737" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="SQL" value="18" />
-          <entry key="Scratch" value="344" />
+          <entry key="Scratch" value="367" />
           <entry key="XML" value="47" />
         </counts>
       </usages-collector>
@@ -210,14 +211,26 @@
     <favorites_list name="linked" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44017327">
+    <splitter split-orientation="horizontal" split-proportion="0.25143325">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="437">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="296" column="56" selection-start-line="295" selection-start-column="30" selection-end-line="296" selection-end-column="56" />
+                <state relative-caret-position="320">
+                  <caret line="435" column="48" lean-forward="true" selection-start-line="435" selection-start-column="48" selection-end-line="435" selection-end-column="48" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="388">
+                  <caret line="142" column="81" lean-forward="true" selection-start-line="142" selection-start-column="19" selection-end-line="142" selection-end-column="81" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -230,21 +243,9 @@
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="701">
-                  <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/NotifyController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="503">
+                <state relative-caret-position="605">
                   <caret line="240" column="29" selection-start-line="240" selection-start-column="29" selection-end-line="240" selection-end-column="29" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -254,19 +255,13 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/user_has_chat">
-              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-                <state>
-                  <filtering enabled="true" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/chat">
-              <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-                <state>
-                  <filtering enabled="true" />
+            <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="417">
+                  <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -293,16 +288,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>jjwt</find>
-      <find>phone</find>
-      <find>updateI</find>
-      <find>Mytoken</find>
       <find>getuser</find>
       <find>getuserB</find>
       <find>getskill</find>
       <find>updateskill</find>
       <find>rs.ne</find>
-      <find>json</find>
       <find>author</find>
       <find>\t</find>
       <find>\n</find>
@@ -317,9 +307,17 @@
       <find>getpo</find>
       <find>create</find>
       <find>==4</find>
-      <find>get</find>
       <find>getj</find>
       <find>update</find>
+      <find>get</find>
+      <find>inst</find>
+      <find>json</find>
+      <find>postmessage</find>
+      <find>postmess</find>
+      <find>insert</find>
+      <find>inste</find>
+      <find>inse</find>
+      <find>getchatid</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -353,9 +351,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Job.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageControler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/NotifyController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Message.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java" />
       </list>
     </option>
   </component>
@@ -395,7 +394,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -408,7 +407,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -515,6 +513,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -522,7 +521,7 @@
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537629756324" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537734488354" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../front/linkedin" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -758,11 +757,12 @@
       <workItem from="1537464191323" duration="4827000" />
       <workItem from="1537552374493" duration="3104000" />
       <workItem from="1537605787102" duration="11517000" />
+      <workItem from="1537692117250" duration="17120000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="357836000" />
+    <option name="totallyTimeSpent" value="374956000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -775,6 +775,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="Image Layers" order="1" />
@@ -783,10 +784,10 @@
       <window_info id="Capture Tool" order="4" />
       <window_info id="Web" order="5" sideWeight="0.50151515" side_tool="true" weight="0.25746268" />
       <window_info id="Structure" order="6" sideWeight="0.50151515" side_tool="true" weight="0.25746268" />
-      <window_info content_ui="combo" id="Project" order="7" sideWeight="0.49838188" visible="true" weight="0.11140725" />
+      <window_info content_ui="combo" id="Project" order="7" sideWeight="0.49838188" visible="true" weight="0.16204691" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914712" weight="0.34815618" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914712" visible="true" weight="0.38611713" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49626866" weight="0.39804772" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -807,7 +808,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="JSF" order="5" weight="0.32995737" />
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.17377399" />
-      <window_info active="true" anchor="right" id="Database" order="7" visible="true" weight="0.18710022" />
+      <window_info anchor="right" id="Database" order="7" visible="true" weight="0.18710022" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="CDI" order="10" />
@@ -992,13 +993,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Post.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/HelloWorld.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/NetworkController.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1031,21 +1025,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/candidate">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/post">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/job">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1066,23 +1046,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageEndpoint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageEndpoint.java" />
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/user">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1107,23 +1071,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/utilities/ResultSetToJsonMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="296" column="56" selection-start-line="295" selection-start-column="30" selection-end-line="296" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/connection">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1131,24 +1078,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="226" column="29" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/comments">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/chat">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1162,9 +1092,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/utilities/ResultSetToJsonMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/candidate">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/NotifyController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
+        <state relative-caret-position="605">
           <caret line="240" column="29" selection-start-line="240" selection-start-column="29" selection-end-line="240" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1172,10 +1116,81 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/JobController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="435" column="48" lean-forward="true" selection-start-line="435" selection-start-column="48" selection-end-line="435" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/chat">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/job">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="das://c1044a1e-db8f-4795-a2de-42c69baf0ddb/schema/linkedin/table/user_has_chat">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Post.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/PostController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="142" column="81" lean-forward="true" selection-start-line="142" selection-start-column="19" selection-end-line="142" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/pojos/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <folding>
+            <element signature="e#184#185#0" expanded="true" />
+            <element signature="e#225#226#0" expanded="true" />
+            <element signature="e#261#262#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+            <element signature="e#321#322#0" expanded="true" />
+            <element signature="e#363#364#0" expanded="true" />
+            <element signature="e#397#398#0" expanded="true" />
+            <element signature="e#428#429#0" expanded="true" />
+            <element signature="e#455#456#0" expanded="true" />
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#527#528#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/linkedin/controller/MessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
