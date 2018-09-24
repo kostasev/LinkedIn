@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {formatDate} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
+import {from, pipe, timer} from 'rxjs';
+import {concatMap, map} from 'rxjs/operators';
+import {promise} from 'selenium-webdriver';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-messages',
@@ -16,10 +20,14 @@ export class MessagesComponent implements OnInit {
   par ;
   messages = [];
   chatname;
+  test;
   constructor(private _auth: AuthService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private http: HttpClient) { }
+
 
   ngOnInit() {
+    
     this.route.params.subscribe(params => {
       this.par = params['id'];
     });

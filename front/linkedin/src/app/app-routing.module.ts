@@ -9,6 +9,7 @@ import {NetworkComponent} from './network/network.component';
 import {MessagesComponent} from './messages/messages.component';
 import {JobsComponent} from './jobs/jobs.component';
 import {NotificationsComponent} from './notifications/notifications.component';
+import {AdminComponent} from './admin/admin.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'network',
     component: NetworkComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
   },
   {
     path: '**',

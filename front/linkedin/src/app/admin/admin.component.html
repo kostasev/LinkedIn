@@ -1,0 +1,49 @@
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-9"><h3>Admin Page</h3></div>
+  <div class="col-md-2">
+    <a class="btn btn-primary" (click)="getCSV()" style="alignment: right;">Export to CSV</a>
+  </div>
+</div>
+<div class="container">
+  <hr>
+  <div class="col-md-3"></div>
+  <div class="card" *ngFor="let user of users" style="margin-bottom: 15px;">
+    <div class="card-body" >
+      <div class="row">
+        <div class="col-md-1"> <input type="checkbox" [(ngModel)]="user.checked"></div>
+        <img src="http://localhost:8080/linkedin/api/profile/picture/{{user.iduser}}"  onError="this.src='../../assets/user-default.png'" >
+        <div class="col-md-1"></div>
+        <div class="col-md-6" (click)="open(content,user)">
+          <b>{{user.name}} {{user.surname}} </b>
+          <p>{{user.email}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Skill</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        Name<input  [(ngModel)]="newUser.name" id="name" class="form-control" placeholder="Name" name="name" ><br>
+        Surname<input [(ngModel)]="newUser.surname" id="surname" class="form-control" placeholder="Surname" name="surname"><br>
+        Birthday<input  [(ngModel)]="newUser.birthday" type="date" id="date" class="form-control" placeholder="Birth" name="birth" ><br>
+        email<input [(ngModel)]="newUser.email" id="email" class="form-control" placeholder="email" name="email" type="email"><br>
+        phone<input  [(ngModel)]="newUser.phone" id="phone" class="form-control" placeholder="Phone" name="phone" type="tel"><br>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateSkill(); c('Save');">Save</button>
+  </div>
+</ng-template>

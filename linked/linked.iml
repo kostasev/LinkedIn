@@ -23,6 +23,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5 - Javaee Security" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5 - WebSocket" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-api:8.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.mail:javax.mail:1.6.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
@@ -60,6 +61,7 @@
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" name="Maven: com.jamesmurty.utils:java-xmlbuilder:1.1" level="project" />
+    <orderEntry type="library" name="Maven: net.iharder:base64:2.3.8" level="project" />
   </component>
 </module>

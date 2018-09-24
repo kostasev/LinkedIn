@@ -23,6 +23,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { JobsComponent } from './jobs/jobs.component';
 import { PostsComponent } from './posts/posts.component';
 import { CommentsComponent } from './comments/comments.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CommentsComponent } from './comments/comments.component';
     NotificationsComponent,
     JobsComponent,
     PostsComponent,
-    CommentsComponent
+    CommentsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

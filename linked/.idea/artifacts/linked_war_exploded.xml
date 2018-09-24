@@ -41,6 +41,8 @@
           <element id="library" level="project" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Maven: org.json:json:20180130" />
+          <element id="library" level="project" name="Maven: com.jamesmurty.utils:java-xmlbuilder:1.1" />
+          <element id="library" level="project" name="Maven: net.iharder:base64:2.3.8" />
         </element>
       </element>
       <element id="directory" name="META-INF">

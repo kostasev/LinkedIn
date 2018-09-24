@@ -63,10 +63,19 @@ public class UserController {
             }
             String token = createToken(authUser);
             System.out.println("User Logged in succesfully\n");
-            JsonObject tokenJson = Json.createObjectBuilder()
-                    .add("token",token)
-                    .add("id",authUser.id)
-                    .build();
+            JsonObject tokenJson = null;
+            if( authUser.id == 1){
+                 tokenJson = Json.createObjectBuilder()
+                        .add("token",token)
+                        .add("id",authUser.id)
+                        .add("admin",authUser.id)
+                        .build();
+            }else {
+                 tokenJson = Json.createObjectBuilder()
+                        .add("token", token)
+                        .add("id", authUser.id)
+                        .build();
+            }
             return Response.ok(tokenJson).build();
         }catch (Exception e){
             e.printStackTrace();

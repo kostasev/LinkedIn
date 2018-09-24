@@ -28,18 +28,18 @@
       <div class="row" id="window_msg">
         <div class="container">
         <div class="row" *ngFor="let msg of messages">
-        <div class="col-md-5">
+        <div class="col-md-5" *ngIf="msg.text!=''">
           <div class="card" style="background-color: #1fa4ff7d;
               margin-top: 10px;" *ngIf="myId != msg.iduser">
-            <div class="card-body">
+            <div class="card-body" >
               {{msg.text}}
             </div>
           </div>
         </div>
         <div class="col-md-2"></div>
-        <div class="col-md-5">
+        <div class="col-md-5" *ngIf="msg.text!=''">
           <div class="card" style="margin-top: 10px;" *ngIf="myId == msg.iduser">
-            <div class="card-body">
+            <div class="card-body" >
               {{msg.text}}
             </div>
           </div>
