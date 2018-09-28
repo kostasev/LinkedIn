@@ -309,4 +309,50 @@ public class MessageController {
             }
         }
     }
+
+
+    @Path("getnew")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getChatNew(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        Message token = gson.fromJson(json, Message.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        String myPosts = null;
+        myPosts = "select * " +
+                "from user_has_chat " +
+                "where datetime > ? and idchat = ? ";
+        try {
+            pSt = con.prepareStatement(myPosts);
+            pSt.setString(1, token.getText());
+            pSt.setInt(2,token.getIduser());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                return Response.ok("{\"answer\":\"No\"}").build();
+            } else {
+                JSONArray jarray = ResultSetToJsonMapper.mapResultSet(rs);
+                return Response.ok(jarray.toString()).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

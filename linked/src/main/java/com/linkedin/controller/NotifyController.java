@@ -7,6 +7,8 @@ import com.linkedin.security.Authenticator;
 import com.linkedin.utilities.ResultSetToJsonMapper;
 import org.json.JSONArray;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -251,5 +253,59 @@ public class NotifyController {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    @Path("notif")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNotif(String json) throws IOException, SQLException {
+        Gson gson = new Gson();
+        MyToken token = gson.fromJson(json, MyToken.class);
+        Authenticator auth = new Authenticator(token.getToken());
+        try {
+            auth.authenticate(auth.getToken());
+            System.out.println("Authenticated Token with user type " + auth.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        PreparedStatement pSt = null;
+        Connection con = DBConnector.getInstance().getConnection();
+        ResultSet rs = null;
+        try {
+            String addPost = "select cm.seen from user as us, post as ps , likes as lk, comments as cm " +
+                    "where ( us.iduser = ps.author and us.iduser= ? and ps.idpost = cm.idpost and cm.seen=0) " +
+                    "union " +
+                    "select lk.seen from user as us, post as ps , likes as lk, comments as cm " +
+                    "where ( us.iduser = ps.author and us.iduser= ? and ps.idpost = lk.idpost and lk.seen=0 ) ";
+            pSt = con.prepareStatement(addPost);
+            pSt.setInt(1, auth.getUserid());
+            pSt.setInt(2, auth.getUserid());
+            rs = pSt.executeQuery();
+            if (!rs.next()) {
+                JsonObject tokenJson = Json.createObjectBuilder()
+                        .add("answer", "no")
+                        .build();
+                return Response.ok(tokenJson).build();
+            } else {
+                JsonObject tokenJson = Json.createObjectBuilder()
+                        .add("answer", "yes")
+                        .build();
+                return Response.ok(tokenJson).build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } finally {
+            try {
+                con.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

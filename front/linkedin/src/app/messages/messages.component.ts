@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {formatDate} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {from, pipe, timer} from 'rxjs';
-import {concatMap, map} from 'rxjs/operators';
+import {from, interval, pipe, timer} from 'rxjs';
+import {concatMap, map, startWith, switchMap} from 'rxjs/operators';
 import {promise} from 'selenium-webdriver';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-messages',
@@ -21,18 +22,33 @@ export class MessagesComponent implements OnInit {
   messages = [];
   chatname;
   test;
+  curchat: number;
+  lastdate;
   constructor(private _auth: AuthService,
               private route: ActivatedRoute,
               private http: HttpClient) { }
 
 
   ngOnInit() {
-    
     this.route.params.subscribe(params => {
       this.par = params['id'];
     });
     this.myId = localStorage.getItem('id');
     this.getChats();
+    interval(1000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this._auth.getMsg(this.chatid , this.lastdate))
+      )
+      .subscribe(res => {
+        if (res['answer'] != 'No') {
+          console.log(res);
+          this.messages.push(res[0]);
+          this.lastdate = res[0]['datetime'];
+          this.lastdate = formatDate(this.lastdate, 'yyyy-MM-dd HH:mm:ss', 'en');
+          console.log('on success' + this.lastdate);
+        }
+      }, error1 => console.log( error1));
   }
 
   private getChats() {
@@ -69,6 +85,9 @@ export class MessagesComponent implements OnInit {
           console.log(res);
           this.getChatId(iduser);
           this.messages = res;
+          this.lastdate = this.messages[this.messages.length - 1]['datetime'];
+          this.lastdate = formatDate(this.lastdate, 'yyyy-MM-dd HH:mm:ss', 'en');
+          console.log('last date' + this.lastdate);
         },
         err => console.log(err));
   }
@@ -79,7 +98,6 @@ export class MessagesComponent implements OnInit {
     token['token'] = localStorage.getItem('token');
     this._auth.getChatId(token)
       .subscribe(res => {
-          console.log('id');
           console.log(res);
           this.chatid = res['id'];
           this.chatname = res['name'] + ' ' + res['surname'];
@@ -98,7 +116,6 @@ export class MessagesComponent implements OnInit {
           console.log(res);
           delete token['token'];
           const msg = { iduser:  parseInt(localStorage.getItem('id'), 10 ), text: token['text']};
-          this.messages.push(msg);
           this.newmessage = '';
         },
         err => console.log(err));

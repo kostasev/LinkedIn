@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from '../auth.service';
+import * as glb from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-notifications',
@@ -7,16 +8,16 @@ import {AuthService} from '../auth.service';
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-  notifications = [ {name: 'kostas', surname: 'evangelou', iduser: 1, idpost: 2 , action: 'liked' , seen: false},
-    {name: 'kostas', surname: 'evangelou', iduser: 1, idpost: 2 , action: 'commented' , seen: true}];
-
+  notifications = [];
   connections = [];
   constructor(private _auth: AuthService) { }
 
   ngOnInit() {
     this.getConRequests();
     this.getNotifications();
+    localStorage.setItem('notif', String(false));
   }
+
 
   private getConRequests() {
     const token = {};

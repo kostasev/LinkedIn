@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -39,10 +39,12 @@ export class AuthService {
   private DelRequest = 'http://localhost:8080/linkedin/api/notification/delete';
   private GetRequests = 'http://localhost:8080/linkedin/api/notification/getall';
   private GetNotifs = 'http://localhost:8080/linkedin/api/notification/getnotifs';
+  private GetNotif = 'http://localhost:8080/linkedin/api/notification/notif';
   private SetSeen = 'http://localhost:8080/linkedin/api/notification/seen';
   private GetChats = 'http://localhost:8080/linkedin/api/messages/getchats';
   private GetChat = 'http://localhost:8080/linkedin/api/messages/getchat';
   private GetChatId = 'http://localhost:8080/linkedin/api/messages/getchatid';
+  private GetNewMsg = 'http://localhost:8080/linkedin/api/messages/getnew';
   private SendMessage = 'http://localhost:8080/linkedin/api/messages/postmessage';
   private GetUsers = 'http://localhost:8080/linkedin/api/admin/users';
   private GetXml = 'http://localhost:8080/linkedin/api/admin/getxml';
@@ -387,6 +389,31 @@ export class AuthService {
 
   getXml(token): Observable<Blob> {
     return this.http.post(this.GetXml, token, {responseType: 'blob'});
+  }
+
+  getNotif(token) {
+    return this.http.post(this.GetNotif, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).pipe(
+      map(res => res )
+    );
+  }
+
+
+  getMsg(chatid , lastmsg) {
+    const token = {};
+    token['token'] = localStorage.getItem('token');
+    token['iduser'] = chatid;
+    token['text'] = lastmsg;
+    return this.http.post(this.GetNewMsg, token, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).pipe(
+      map(res => res)
+    );
   }
 }
 
